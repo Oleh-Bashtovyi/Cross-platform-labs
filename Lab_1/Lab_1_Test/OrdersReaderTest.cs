@@ -13,8 +13,9 @@ public class OrdersReaderTest
             new(3, 45)
         };
 
-        var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"TestData\test_1.txt");
-        var actualResult = OrdersReader.ReadOrders(filePath);
+        //var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "test_reading.txt");
+        var filePath = Path.Combine("TestData", "test_reading.txt");
+        var actualResult = OrdersReader.Read(filePath);
 
         Assert.Equal(expectedResult, actualResult);
     }

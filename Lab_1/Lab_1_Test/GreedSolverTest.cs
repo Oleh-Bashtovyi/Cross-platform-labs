@@ -35,4 +35,22 @@ public class GreedSolverTest
 
         Assert.Equal(expectedResult, actualResult);
     }
+
+
+    [Theory]
+    [InlineData("test_1.txt", 650)]
+    [InlineData("test_2.txt", 200000000)]
+    [InlineData("test_3.txt", 6275)] 
+    [InlineData("test_4.txt", 20010)]
+    [InlineData("test_5.txt", 32750)]
+    public void SolveOrdersProblem_ReadAndSolve(string fileName, int expectedResult)
+    {
+        var filePath = Path.Combine("TestData", fileName);
+
+        var orders = OrdersReader.Read(filePath);
+
+        var actualResult = OrdersProblemSolver.Solve(orders);
+
+        Assert.Equal(expectedResult, actualResult);
+    }
 }

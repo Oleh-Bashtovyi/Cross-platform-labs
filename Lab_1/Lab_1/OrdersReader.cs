@@ -2,7 +2,7 @@
 
 public static class OrdersReader
 {
-    public static List<Order> ReadOrders(string filePath)
+    public static List<Order> Read(string filePath)
     {
         var lines = File.ReadAllLines(filePath);
         

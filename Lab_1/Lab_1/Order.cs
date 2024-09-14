@@ -27,4 +27,9 @@ public class Order
     {
         return base.GetHashCode();
     }
+
+    public override string ToString()
+    {
+        return $"[{Deadline}, {Reward}]";
+    }
 }
