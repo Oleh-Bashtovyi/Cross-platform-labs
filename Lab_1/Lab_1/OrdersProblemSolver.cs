@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Lab_1;
 
-namespace Lab_1;
-
-public static class GreedSolver
+public static class OrdersProblemSolver
 {
-    public static int SolveOrdersProblem(IEnumerable<Order> orders)
+    public static int Solve(IEnumerable<Order> orders)
     {
         if (orders.Count() == 0)
         {
