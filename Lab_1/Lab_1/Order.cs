@@ -7,10 +7,10 @@ public class Order
 
     public Order() { }
 
-    public Order(int deadline, int profit)
+    public Order(int deadline, int reward)
     {
         Deadline = deadline;
-        Reward = profit;
+        Reward = reward;
     }
 
     public override bool Equals(object? obj)
