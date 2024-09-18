@@ -1,4 +1,4 @@
-﻿namespace Lab_1;
+﻿namespace App;
 
 public class Order
 {
