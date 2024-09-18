@@ -1,8 +1,8 @@
-﻿using Lab_1;
+﻿using App;
 
-namespace Lab_1_Test;
+namespace Test;
 
-public class OrdersReaderTest
+public class IOHandlerTest
 {
     [Fact]
     public void ReadOrders()
@@ -13,9 +13,8 @@ public class OrdersReaderTest
             new(3, 45)
         };
 
-        //var filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "TestData", "test_reading.txt");
         var filePath = Path.Combine("TestData", "test_reading.txt");
-        var actualResult = OrdersReader.Read(filePath);
+        var actualResult = IOHandler.ReadOrders(filePath);
 
         Assert.Equal(expectedResult, actualResult);
     }

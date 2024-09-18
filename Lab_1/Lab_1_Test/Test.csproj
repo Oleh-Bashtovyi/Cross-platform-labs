@@ -10,30 +10,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="TestData\test_1.txt" />
-    <None Remove="TestData\test_2.txt" />
-    <None Remove="TestData\test_3.txt" />
-    <None Remove="TestData\test_4.txt" />
-    <None Remove="TestData\test_5.txt" />
     <None Remove="TestData\test_reading.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="TestData\test_1.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\test_5.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\test_4.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\test_3.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestData\test_2.txt">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="TestData\test_reading.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -47,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lab_1\Lab_1.csproj" />
+    <ProjectReference Include="..\Lab_1\App.csproj" />
   </ItemGroup>
 
   <ItemGroup>

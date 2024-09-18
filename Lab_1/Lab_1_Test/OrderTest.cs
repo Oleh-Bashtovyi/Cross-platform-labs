@@ -1,6 +1,6 @@
-﻿using Lab_1;
+﻿using App;
 
-namespace Lab_1_Test;
+namespace Test;
 
 public class OrderTest
 {
