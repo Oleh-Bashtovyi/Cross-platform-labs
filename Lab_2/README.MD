@@ -35,7 +35,7 @@ dotnet test --logger "console;verbosity=detailed"
 
 | №  | INPUT.TXT        | OUTPUT.TXT  |
 |----|------------------|-------------|
-| 1  | 3                |  646         |
+| 1  | 3                |  646        |
 |    | 34 29            |             |
 |    | 29 4             |             |
 |    | 4 15             |             |
