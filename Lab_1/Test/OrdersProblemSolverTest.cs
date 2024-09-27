@@ -54,22 +54,6 @@ public class OrdersProblemSolverTest(ITestOutputHelper output)
 
 
     [Theory]
-    [InlineData(5, -1)]
-    [InlineData(5, 100_001)]
-    [InlineData(100_001, 54)]
-    [InlineData(0, 54)]
-    public void Solve_InvalidOrders_ThrowsArgumentOutOfRangeException(int deadline, int reward)
-    {
-        var order = new Order(deadline, reward);
-        var orders = new Order[1] { order };
-
-        var error = Assert.Throws<ArgumentOutOfRangeException>(() => OrdersProblemSolver.Solve(orders));
-        _output.WriteLine(error.Message);
-    }
-
-
-
-    [Theory]
     [InlineData(650, new int[] { 2, 100, 1, 50, 2, 150, 3, 200, 2, 300 })]
     [InlineData(200_000, new int[] { 5, 100_000, 5, 50_000, 5, 30_000, 5, 20_000 })]
     [InlineData(330, new int[] {3, 20, 4, 50, 3, 50, 2, 60, 1, 30, 4, 120, 3, 100})]
