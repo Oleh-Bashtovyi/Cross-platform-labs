@@ -2,6 +2,11 @@
 
 public static class BlocksCombiningProblemSolver
 {
+    public const int MIN_LEFT = 1;
+    public const int MAX_LEFT = 100;
+    public const int MIN_RIGHT = 1;
+    public const int MAX_RIGHT = 100;
+
     public static int Solve(ProductBlock[] blocks)
     {
         if (blocks.Length == 0 || blocks.Length == 1)
@@ -9,6 +14,10 @@ public static class BlocksCombiningProblemSolver
             return 0;
         }
 
+        var validator = new ProductBlockValidator(MIN_LEFT, MAX_LEFT, MIN_RIGHT, MAX_RIGHT);
+
+        validator.Validate(blocks);
+        
         var n = blocks.Count();
         var leftParts = new int[n + 1];
         var rightParts = new int[n + 1];
