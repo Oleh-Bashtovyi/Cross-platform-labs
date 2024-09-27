@@ -10,10 +10,18 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="TestData\test_blocks_count_out_of_range_max.txt" />
+    <None Remove="TestData\test_blocks_count_out_of_range_min.txt" />
     <None Remove="TestData\test_reading.txt" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="TestData\test_blocks_count_out_of_range_max.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\test_blocks_count_out_of_range_min.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="TestData\test_reading.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
