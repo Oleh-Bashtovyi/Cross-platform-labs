@@ -1,25 +1,31 @@
 ﻿namespace App;
 
-internal class Program
+internal static class Program
 {
-    static void Main(string[] args)
+    public const string INPUT_FILENAME = "INPUT.TXT";
+    public const string OUTPUT_FILENAME = "OUTPUT.TXT";
+
+    private static void Main()
     {
+        var prevConsoleColor = Console.ForegroundColor;
         try
         {
-            var blocks = IOHandler.ReadProductBlocks();
+            var blocks = IOHandler.ReadProductBlocks(INPUT_FILENAME);
 
             var result = BlocksCombiningProblemSolver.Solve(blocks.ToArray());
 
-            IOHandler.WriteResult(result);
+            IOHandler.WriteResult(result, OUTPUT_FILENAME);
 
             Console.WriteLine("Result successfuly written to file!");
         }
         catch (Exception ex)
         {
-            var prevColor = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine(ex.Message);
-            Console.ForegroundColor = prevColor;
+        }
+        finally
+        {
+            Console.ForegroundColor = prevConsoleColor;
         }
         Console.WriteLine("Program finished!");
     }

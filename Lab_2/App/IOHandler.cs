@@ -7,7 +7,7 @@ public static class IOHandler
     public const int MAX_BLOCK_COUNT = 100;
 
 
-    public static List<ProductBlock> ReadOrders(string filePath)
+    public static List<ProductBlock> ReadProductBlocks(string filePath)
     {
         if (!File.Exists(filePath))
         {
