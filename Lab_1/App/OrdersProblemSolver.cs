@@ -19,14 +19,14 @@ public static class OrdersProblemSolver
             return 0;
         }
 
-        foreach (var order in orders)
-        {
-            ValidateOrder(order);
-        }
+        var validator = new OrderValidator(MIN_DEADLINE, MAX_DEADLINE, MIN_REWARD, MAX_REWARD);
+
+        validator.Validate(orders);
 
         var sortedOrders = orders.OrderByDescending(x => x.Reward).ToList();
+        var maxDeadline = orders.Max(x => x.Deadline);
 
-        var occupied = new bool[MAX_DEADLINE + 1];
+        var occupied = new bool[maxDeadline + 1];
 
         var totalReward = 0;
 
@@ -45,24 +45,5 @@ public static class OrdersProblemSolver
         }
 
         return totalReward;
-    }
-
-
-    private static void ValidateOrder(Order order)
-    {
-        if(order.Reward < MIN_REWARD || order.Reward > MAX_REWARD)
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(order),  
-                $"Reward should be between {MIN_REWARD} and {MAX_REWARD}." + Environment.NewLine +
-                $"Actual reward: {order.Reward}, order: {order}");
-        }
-        if (order.Deadline < MIN_DEADLINE || order.Deadline > MAX_DEADLINE)
-        {
-            throw new ArgumentOutOfRangeException(
-                nameof(order),
-                $"Deadline should be between {MIN_DEADLINE} and {MAX_DEADLINE}." + Environment.NewLine +
-                $"Actual deadline: {order.Deadline}, order: {order}");
-        }
     }
 }

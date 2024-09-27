@@ -2,16 +2,10 @@
 
 public static class IOHandler
 {
-    public const string InputFileName = "INPUT.TXT";
-    public const string OutputFileName = "OUTPUT.TXT";
+
     public const int MIN_ORDER_COUNT = 1;
     public const int MAX_ORDER_COUNT = 1000;
 
-
-    public static List<Order> ReadOrders()
-    {
-        return ReadOrders(InputFileName);
-    }
 
     public static List<Order> ReadOrders(string filePath)
     {
@@ -78,13 +72,9 @@ public static class IOHandler
         return orders;
     }
 
-    public static void WriteResult(int result)
-    {
-        WriteResult(result, OutputFileName);
-    }
 
     public static void WriteResult(int result, string filePath)
     {
-        File.WriteAllText(OutputFileName, result.ToString());
+        File.WriteAllText(filePath, result.ToString());
     }
 }
