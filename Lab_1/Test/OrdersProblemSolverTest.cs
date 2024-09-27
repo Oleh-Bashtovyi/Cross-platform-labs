@@ -8,7 +8,7 @@ public class OrdersProblemSolverTest(ITestOutputHelper output)
     ITestOutputHelper _output = output;
 
     [Fact]
-    public void SolveOrdersProblem_ExampleTestCase_1()
+    public void Solve_ExampleTestCase_1_ToBeSuccessful()
     {
         //Arrange
         var orders = new Order[]
@@ -30,7 +30,7 @@ public class OrdersProblemSolverTest(ITestOutputHelper output)
 
 
     [Fact]
-    public void SolveOrdersProblem_ExampleTestCase_2()
+    public void Solve_ExampleTestCase_2_ToBeSuccessful()
     {
         //Arrange
         var orders = new Order[]
@@ -54,10 +54,26 @@ public class OrdersProblemSolverTest(ITestOutputHelper output)
 
 
     [Theory]
+    [InlineData(5, -1)]
+    [InlineData(5, 100_001)]
+    [InlineData(100_001, 54)]
+    [InlineData(0, 54)]
+    public void Solve_InvalidOrders_ThrowsArgumentOutOfRangeException(int deadline, int reward)
+    {
+        var order = new Order(deadline, reward);
+        var orders = new Order[1] { order };
+
+        var error = Assert.Throws<ArgumentOutOfRangeException>(() => OrdersProblemSolver.Solve(orders));
+        _output.WriteLine(error.Message);
+    }
+
+
+
+    [Theory]
     [InlineData(650, new int[] { 2, 100, 1, 50, 2, 150, 3, 200, 2, 300 })]
-    [InlineData(200_000_000, new int[] { 5, 100_000_000, 5, 50_000_000, 5, 30_000_000, 5, 20_000_000 })]
+    [InlineData(200_000, new int[] { 5, 100_000, 5, 50_000, 5, 30_000, 5, 20_000 })]
     [InlineData(330, new int[] {3, 20, 4, 50, 3, 50, 2, 60, 1, 30, 4, 120, 3, 100})]
-    public void Solve_SimpleCases(int expectedResult, int[] data)
+    public void Solve_SimpleCases_ToBeSuccessful(int expectedResult, int[] data)
     {
         //Arrange
         var orders = new List<Order>();
@@ -80,19 +96,21 @@ public class OrdersProblemSolverTest(ITestOutputHelper output)
 
 
     [Fact]
-    public void Solve_MaxNumberOfOrdersWithMaxReward()
+    public void Solve_MaxNumberOfOrdersWithMaxRewards_ToBeSuccessful()
     {
         var maxNumberOfOrders = 1000;
         var maxReward = 100_000;
+        var maxDeadline = 100_000;
+
         var orders = new List<Order>();
 
         for(int i = 0; i < maxNumberOfOrders; i++)
         {
-            var order = new Order(maxNumberOfOrders, maxReward);
+            var order = new Order(maxDeadline, maxReward);
             orders.Add(order);
         }
 
-        var expectedResult = maxNumberOfOrders * maxReward;
+        var expectedResult = 100_000_000;
 
         var actualResult = OrdersProblemSolver.Solve(orders);
 
