@@ -8,7 +8,7 @@ public class BlocksCombiningProblemSolverTest(ITestOutputHelper output)
     ITestOutputHelper _output = output;
 
     [Fact]
-    public void SolveOrdersProblem_ExampleTestCase()
+    public void Solve_ExampleTestCase_1_ToBeSuccessful()
     {
         //Arrange
         var blocks = new ProductBlock[]
@@ -36,7 +36,7 @@ public class BlocksCombiningProblemSolverTest(ITestOutputHelper output)
     [InlineData(124, new int[] { 4, 15, 15, 24, 24, 7 })]
     [InlineData(2074, new int[] {100, 8, 8, 14, 14, 32, 32, 17})]
     [InlineData(179, new int[] {3, 25, 25, 47, 47, 5, 5, 13})]
-    public void Solve_SimpleCases(int expectedResult, int[] data)
+    public void Solve_SimpleCases_ToBeSuccessful(int expectedResult, int[] data)
     {
         //Arrange
         var blocks = new List<ProductBlock>(data.Length / 2);
@@ -58,12 +58,12 @@ public class BlocksCombiningProblemSolverTest(ITestOutputHelper output)
     }
 
     [Fact]
-    public void Solve_EdgeTestCase()
+    public void Solve_MaxNumberOfBlocksWithMaxConnectionCost_ToBeSuccessful()
     {
         var maxNumberOfBlocks = 100;
         var maxLeft = 100;
         var maxRight = 100;
-        var expectedResult = (maxNumberOfBlocks - 1) * maxLeft * maxRight;
+        var expectedResult = 990_000;
 
         var blocks = new ProductBlock[maxNumberOfBlocks];
 

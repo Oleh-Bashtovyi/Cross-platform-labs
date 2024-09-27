@@ -24,5 +24,5 @@ dotnet build Build.proj -t:Test -p:Solution=Lab1
 ```
 
 ## Завдання
-- [Lab1](./Lab1)
-- [Lab2](./Lab2)
+- [Lab_1](./Lab_1)
+- [Lab_2](./Lab_2)
