@@ -5,7 +5,7 @@ namespace Test;
 
 public class OrdersProblemSolverTest(ITestOutputHelper output)
 {
-    ITestOutputHelper _output = output;
+    private readonly ITestOutputHelper _output = output;
 
     [Fact]
     public void Solve_ExampleTestCase_1_ToBeSuccessful()

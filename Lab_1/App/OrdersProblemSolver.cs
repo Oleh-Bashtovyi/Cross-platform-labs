@@ -14,7 +14,7 @@ public static class OrdersProblemSolver
     /// <returns>maximum reward</returns>
     public static int Solve(IEnumerable<Order> orders)
     {
-        if (orders.Count() == 0)
+        if (!orders.Any())
         {
             return 0;
         }
@@ -53,14 +53,14 @@ public static class OrdersProblemSolver
         if(order.Reward < MIN_REWARD || order.Reward > MAX_REWARD)
         {
             throw new ArgumentOutOfRangeException(
-                nameof(Order.Reward),  
+                nameof(order),  
                 $"Reward should be between {MIN_REWARD} and {MAX_REWARD}." + Environment.NewLine +
                 $"Actual reward: {order.Reward}, order: {order}");
         }
         if (order.Deadline < MIN_DEADLINE || order.Deadline > MAX_DEADLINE)
         {
             throw new ArgumentOutOfRangeException(
-                nameof(Order.Deadline),
+                nameof(order),
                 $"Deadline should be between {MIN_DEADLINE} and {MAX_DEADLINE}." + Environment.NewLine +
                 $"Actual deadline: {order.Deadline}, order: {order}");
         }
