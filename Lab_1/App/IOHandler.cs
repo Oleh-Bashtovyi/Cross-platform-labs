@@ -2,8 +2,10 @@
 
 public static class IOHandler
 {
-    private const string InputFileName = "INPUT.TXT";
-    private const string OutputFileName = "OUTPUT.TXT";
+    public const string InputFileName = "INPUT.TXT";
+    public const string OutputFileName = "OUTPUT.TXT";
+    public const int MIN_ORDER_COUNT = 1;
+    public const int MAX_ORDER_COUNT = 1000;
 
 
     public static List<Order> ReadOrders()
@@ -30,18 +32,29 @@ public static class IOHandler
 
         if (!int.TryParse(lines[0], out int numberOfOrders))
         {
-            throw new FormatException($"Unable to parse value: {lines[0]}.");
+            throw new FormatException(
+                $"Unable to parse first line (number of orders): {lines[0]}.");
+        }
+
+        if(numberOfOrders < MIN_ORDER_COUNT || numberOfOrders > MAX_ORDER_COUNT)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(numberOfOrders),
+                $"Number of orders (first line) should be between {MIN_ORDER_COUNT} and {MAX_ORDER_COUNT}{Environment.NewLine}" +
+                $"Actual value: {numberOfOrders}");
+        }
+
+        if (numberOfOrders >= lines.Count)
+        {
+            throw new FormatException(
+                $"File dont have specified number of orders.{Environment.NewLine}" +
+                $"Expected: {numberOfOrders}, Actual: {lines.Count - 1}");
         }
 
         var orders = new List<Order>();
 
         for (int i = 1; i <= numberOfOrders; i++)
         {
-            if (i >= lines.Count)
-            {
-                throw new FormatException($"File dont have specified amount of orders. Expected: {numberOfOrders}, Actual: {lines.Count - 1}");
-            }
-
             var parts = lines[i].Split(' ', StringSplitOptions.RemoveEmptyEntries);
 
             if (parts.Length != 2)
