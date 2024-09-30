@@ -10,19 +10,20 @@
 
 Запустити лабораторну:
 ```bash
-dotnet build Build.proj -t:Run -p:Solution=Lab1
+dotnet build Build.proj -t:Run -p:Solution=Lab_1
 ```
 
 Білд:
 ```bash
-dotnet build Build.proj -t:Build -p:Solution=Lab1
+dotnet build Build.proj -t:Build -p:Solution=Lab_1
 ```
 
 Тести:
 ```bash
-dotnet build Build.proj -t:Test -p:Solution=Lab1
+dotnet build Build.proj -t:Test -p:Solution=Lab_1
 ```
 
 ## Завдання
 - [Lab_1](./Lab_1)
 - [Lab_2](./Lab_2)
+- [Lab_3](./Lab_3)
