@@ -3,6 +3,8 @@
 
 public static class IOHandler
 {
+    public const int MAX_MATRIX_SIZE = 200;
+
     public static int[,] ReadMatrixFromFile(string filePath)
     {
         try
@@ -24,6 +26,11 @@ public static class IOHandler
             if (!int.TryParse(lines[0], out int matrixDimension) || matrixDimension <= 0)
             {
                 throw new Exception($"{lines[0]} - Invalid matrix dimension.");
+            }
+
+            if (matrixDimension > MAX_MATRIX_SIZE)
+            {
+                throw new Exception($"Matrix size should be less or equal: {MAX_MATRIX_SIZE}");
             }
 
             if (lines.Length - 1 != matrixDimension)
