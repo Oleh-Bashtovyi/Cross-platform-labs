@@ -6,17 +6,15 @@ namespace Test;
 public class SquareMatrixValidatorTest
 {
     private readonly SquareMatrixValidator _validator;
-    private readonly ITestOutputHelper _output;
     private const int MATRIX_MAX_DIMENSION = 5;
     private const int MATRIX_MIN_DIMENSION = 2;
     private const int MATRIX_MAX_VALUES = 20;
     private const int MATRIX_MIN_VALUES = 0;
 
 
-    public SquareMatrixValidatorTest(ITestOutputHelper output)
+    public SquareMatrixValidatorTest()
     {
         _validator = new SquareMatrixValidator(MATRIX_MIN_DIMENSION, MATRIX_MAX_DIMENSION, MATRIX_MIN_VALUES, MATRIX_MAX_VALUES);
-        _output = output;
     }
 
 

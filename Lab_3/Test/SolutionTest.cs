@@ -6,7 +6,7 @@ namespace Test;
 
 public class SolutionTest(ITestOutputHelper output)
 {
-    ITestOutputHelper _output = output;
+    private readonly ITestOutputHelper _output = output;
 
     [Fact]
     public void Solve_ExampleTestCase_ToBeSuccessful()

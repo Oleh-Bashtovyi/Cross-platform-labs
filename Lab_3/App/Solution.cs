@@ -9,7 +9,7 @@ public static class Solution
     public const int MATRIX_MAX_VALUES = 1_000_000;
     public const int MATRIX_MIN_VALUES = 0;
     private const int MARKED = -1000000000; //позначає клітину, яку можна відвідали двічі або більше
-    private static readonly SquareMatrixValidator s_Validator;
+    private static readonly SquareMatrixValidator s_Validator = new SquareMatrixValidator(MATRIX_MIN_DIMENSION, MATRIX_MAX_DIMENSION, MATRIX_MIN_VALUES, MATRIX_MAX_VALUES);
     private static readonly Point[] Directions =
     [
         new Point(-1, 0), // вгору
@@ -17,13 +17,6 @@ public static class Solution
         new Point(1, 0),  // вниз
         new Point(0, 1)   // вправо
     ];
-
-
-    static Solution()
-    {
-        s_Validator = new SquareMatrixValidator(MATRIX_MIN_DIMENSION, MATRIX_MAX_DIMENSION, MATRIX_MIN_VALUES, MATRIX_MAX_VALUES);
-    }
-
 
 
     public static int[,] Solve(int[,] matrix)

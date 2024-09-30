@@ -20,22 +20,22 @@ public static class IOHandler
 
             if (lines.Length == 0)
             {
-                throw new Exception("File is empty.");
+                throw new InvalidOperationException("File is empty.");
             }
 
             if (!int.TryParse(lines[0], out int matrixDimension) || matrixDimension <= 0)
             {
-                throw new Exception($"{lines[0]} - Invalid matrix dimension.");
+                throw new InvalidOperationException($"{lines[0]} - Invalid matrix dimension.");
             }
 
             if (matrixDimension > MAX_MATRIX_SIZE)
             {
-                throw new Exception($"Matrix size should be less or equal: {MAX_MATRIX_SIZE}");
+                throw new InvalidOperationException($"Matrix size should be less or equal: {MAX_MATRIX_SIZE}");
             }
 
             if (lines.Length - 1 != matrixDimension)
             {
-                throw new Exception($"Matrix must have {matrixDimension} rows.");
+                throw new InvalidOperationException($"Matrix must have {matrixDimension} rows.");
             }
 
             var matrix = new int[matrixDimension, matrixDimension];
@@ -46,14 +46,14 @@ public static class IOHandler
 
                 if (row.Length != matrixDimension)
                 {
-                    throw new Exception($"Matrix row {i + 1} must have {matrixDimension} elements.");
+                    throw new InvalidOperationException($"Matrix row {i + 1} must have {matrixDimension} elements.");
                 }
 
                 for (int j = 0; j < matrixDimension; j++)
                 {
                     if (!int.TryParse(row[j], out matrix[i, j]))
                     {
-                        throw new Exception($"Invalid value at row {i + 1}, column {j + 1}. Actual value: {row[j]}");
+                        throw new InvalidOperationException($"Invalid value at row {i + 1}, column {j + 1}. Actual value: {row[j]}");
                     }
                 }
             }
@@ -62,7 +62,7 @@ public static class IOHandler
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error reading matrix from file: {ex.Message}");
+            throw new InvalidOperationException($"Error reading matrix from file: {ex.Message}");
         }
     }
 
@@ -92,7 +92,7 @@ public static class IOHandler
         }
         catch (Exception ex)
         {
-            throw new Exception($"Error writing matrix to file: {ex.Message}");
+            throw new InvalidOperationException($"Error writing matrix to file: {ex.Message}");
         }
     }
 }
