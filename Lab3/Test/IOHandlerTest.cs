@@ -4,11 +4,11 @@ namespace Test;
 public class IOHandlerTest
 {
     [Fact]
-    public void ReadMatrix_MatrixSizeOutOfRange_ThrowsException()
+    public void ReadMatrix_MatrixSizeOutOfRange_ThrowsInvalidOperationException()
     {
         var filePath = Path.Combine("TestData", "test_matrix_size_out_of_max_size");
 
-        Assert.Throws<Exception>(() => IOHandler.ReadMatrixFromFile(filePath));
+        Assert.Throws<InvalidOperationException>(() => IOHandler.ReadMatrixFromFile(filePath));
     }
 
     [Fact]
