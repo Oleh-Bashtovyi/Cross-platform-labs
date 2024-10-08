@@ -11,7 +11,7 @@ public class IOHandlerTest
     {
         var filePath = Path.Combine("TestData", fileName);
 
-        Assert.Throws<ArgumentOutOfRangeException>(() => IOHandler.ReadOrders(filePath));
+        Assert.Throws<InvalidOperationException>(() => IOHandler.ReadOrders(filePath));
     }
 
 

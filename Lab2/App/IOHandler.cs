@@ -24,30 +24,29 @@ public static class IOHandler
         }
 
 
-        if (!int.TryParse(lines[0], out int numberOfOrders))
+        if (!int.TryParse(lines[0], out int numberOfBlocks))
         {
             throw new FormatException(
                 $"Unable to parse first line (number of blocks): {lines[0]}.");
         }
 
-        if (numberOfOrders < MIN_BLOCK_COUNT || numberOfOrders > MAX_BLOCK_COUNT)
+        if (numberOfBlocks < MIN_BLOCK_COUNT || numberOfBlocks > MAX_BLOCK_COUNT)
         {
-            throw new ArgumentOutOfRangeException(
-                nameof(numberOfOrders),
+            throw new InvalidOperationException(
                 $"Number of blocks (first line) should be between {MIN_BLOCK_COUNT} and {MAX_BLOCK_COUNT}{Environment.NewLine}" +
-                $"Actual value: {numberOfOrders}");
+                $"Actual value: {numberOfBlocks}");
         }
 
-        if (numberOfOrders >= lines.Count)
+        if (numberOfBlocks >= lines.Count)
         {
             throw new FormatException(
                 $"File dont have specified number of product blocks.{Environment.NewLine}" +
-                $"Expected: {numberOfOrders}, Actual: {lines.Count - 1}");
+                $"Expected: {numberOfBlocks}, Actual: {lines.Count - 1}");
         }
 
         var orders = new List<ProductBlock>();
 
-        for (int i = 1; i <= numberOfOrders; i++)
+        for (int i = 1; i <= numberOfBlocks; i++)
         {
             var parts = lines[i].Split(' ', StringSplitOptions.RemoveEmptyEntries);
 

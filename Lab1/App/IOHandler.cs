@@ -32,8 +32,7 @@ public static class IOHandler
 
         if(numberOfOrders < MIN_ORDER_COUNT || numberOfOrders > MAX_ORDER_COUNT)
         {
-            throw new ArgumentOutOfRangeException(
-                nameof(numberOfOrders),
+            throw new InvalidOperationException(
                 $"Number of orders (first line) should be between {MIN_ORDER_COUNT} and {MAX_ORDER_COUNT}{Environment.NewLine}" +
                 $"Actual value: {numberOfOrders}");
         }
