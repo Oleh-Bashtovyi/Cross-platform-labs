@@ -1,4 +1,4 @@
-﻿namespace App;
+﻿namespace Lab_3;
 
 
 public static class IOHandler

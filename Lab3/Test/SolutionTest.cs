@@ -1,4 +1,4 @@
-﻿using App;
+﻿using Lab_3;
 using Xunit.Abstractions;
 
 namespace Test;

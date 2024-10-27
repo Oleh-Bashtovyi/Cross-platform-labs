@@ -1,4 +1,4 @@
-﻿using App;
+﻿using Lab_2;
 
 namespace Test;
 

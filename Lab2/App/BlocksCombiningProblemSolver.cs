@@ -1,4 +1,4 @@
-﻿namespace App;
+﻿namespace Lab_2;
 
 public static class BlocksCombiningProblemSolver
 {

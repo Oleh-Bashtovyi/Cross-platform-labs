@@ -1,4 +1,4 @@
-﻿namespace App;
+﻿namespace Lab_1;
 
 public class OrderValidator
 {
