@@ -2,8 +2,8 @@
 
 internal static class Program
 {
-    public const string INPUT_FILENAME = "input.txt";
-    public const string OUTPUT_FILENAME = "output.txt";
+    public const string INPUT_FILENAME = "INPUT.TXT";
+    public const string OUTPUT_FILENAME = "OUTPUT.TXT";
 
     private static void Main()
     {

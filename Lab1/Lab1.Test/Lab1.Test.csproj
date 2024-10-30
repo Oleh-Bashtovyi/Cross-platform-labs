@@ -10,12 +10,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="TestData\test_matrix_size_out_of_max_size.txt" />
+    <None Remove="TestData\test_orders_count_out_of_range_max.txt" />
+    <None Remove="TestData\test_orders_count_out_of_range_min.txt" />
     <None Remove="TestData\test_reading.txt" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="TestData\test_matrix_size_out_of_max_size.txt">
+    <Content Include="TestData\test_orders_count_out_of_range_min.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="TestData\test_orders_count_out_of_range_max.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="TestData\test_reading.txt">
@@ -35,11 +39,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\App\App.csproj" />
+    <ProjectReference Include="..\Lab1\Lab1.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Using Include="Xunit" />
   </ItemGroup>
-
 </Project>
