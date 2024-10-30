@@ -1,16 +1,7 @@
-﻿using System;
-using Lab_4;
-using Lab_1;
-using Lab_2;
-using Lab_3;
-using McMaster.Extensions.CommandLineUtils;
+﻿using McMaster.Extensions.CommandLineUtils;
 using Lab4;
 
-
 namespace Lab_4;
-
-
-
 
 [Command(Name = "Lab4", Description = "Console app for labs")]
 [Subcommand(typeof(VersionCommand), typeof(RunCommand), typeof(SetPathCommand))]
@@ -48,7 +39,7 @@ class VersionCommand
 class SetPathCommand
 {
     [Option("-p|--path", "Set LAB_PATH environment variable", CommandOptionType.SingleValue)]
-    public string Path { get; set; }
+    public string? Path { get; set; }
 
     private void OnExecute(IConsole console)
     {
@@ -104,6 +95,7 @@ class RunCommand
             inputPath = Path.Combine(labPath, "INPUT.TXT");
         }
 
+        Console.WriteLine($"Environment LAB_PATH: {Environment.GetEnvironmentVariable("LAB_PATH")}");
         Console.WriteLine($"INPUT: '{inputPath}'");
         Console.WriteLine($"OUTPUT: '{outputPath}'");
 
@@ -141,13 +133,13 @@ class RunCommand
         switch (labName.ToLower())
         {
             case "lab1":
-                return Path.Combine(projectRoot, "LAB4", "LAB1");
+                return Path.Combine(projectRoot, "Lab1");
             case "lab2":
-                return Path.Combine(projectRoot, "LAB4", "LAB2");
+                return Path.Combine(projectRoot, "Lab2");
             case "lab3":
-                return Path.Combine(projectRoot, "LAB4", "LAB3");
+                return Path.Combine(projectRoot, "Lab3");
             default:
-                return null; // або можна кинути виключення, якщо це бажано
+                return null; 
         }
     }
 }
