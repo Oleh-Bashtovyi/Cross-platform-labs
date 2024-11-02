@@ -94,6 +94,9 @@ ipch/
 *.vspx
 *.sap
 
+# Vagrant
+.vagrant
+
 # TFS 2012 Local Workspace
 $tf/
 

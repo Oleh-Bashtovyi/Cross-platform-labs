@@ -87,13 +87,21 @@ class RunCommand
             return;
         }
 
-        var inputPath = InputFile ?? Environment.GetEnvironmentVariable("LAB_PATH");
-        var outputPath = OutputFile ?? Path.Combine(labPath, "OUTPUT.TXT");
+        string inputPath;
 
-        if (string.IsNullOrEmpty(inputPath))
+        // Assign the input file path with a priority to InputFile
+        if (string.IsNullOrEmpty(InputFile))
         {
-            inputPath = Path.Combine(labPath, "INPUT.TXT");
+            inputPath = Environment.GetEnvironmentVariable("LAB_PATH") ?? 
+                        Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "INPUT.txt");
+
         }
+        else
+        {
+            inputPath = InputFile;
+        }
+
+        var outputPath = !string.IsNullOrEmpty(OutputFile) ? OutputFile : Path.Combine(labPath, "OUTPUT.txt");
 
         Console.WriteLine($"Environment LAB_PATH: {Environment.GetEnvironmentVariable("LAB_PATH")}");
         Console.WriteLine($"INPUT: '{inputPath}'");

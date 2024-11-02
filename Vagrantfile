@@ -33,21 +33,30 @@ Vagrant.configure("2") do |config|
       dotnet --list-sdks
       dotnet --list-runtimes
 
-      # cd /home/vagrant/project
-      # dotnet run --project Lab4 run lab1
-
       if command -v dotnet &> /dev/null; then
-        cd /home/vagrant/project
-        echo "Starting project..."
-        echo "Lab 1:"
-        echo "========================================"
-        dotnet run --project Lab4 run lab1 -I Lab4/Lab1/INPUT.TXT -o Lab4/Lab1/OUTPUT.TXT
-        echo "Lab 2:"
-        echo "========================================"
-        dotnet run --project Lab4 run lab2 -I Lab4/Lab2/INPUT.TXT -o Lab4/Lab2/OUTPUT.TXT
-        echo "Lab 3:"
-        echo "========================================"
-        dotnet run --project Lab4 run lab3 -I Lab4/Lab3/INPUT.TXT -o Lab4/Lab3/OUTPUT.TXT
+        # cd /home/vagrant/project
+        # echo "Starting project..."
+        # echo "Lab 1:"
+        # echo "========================================"
+        # dotnet run --project Lab4 run lab1 -I Lab4/Lab1/INPUT.TXT -o Lab4/Lab1/OUTPUT.TXT
+        # echo "Lab 2:"
+        # echo "========================================"
+        # dotnet run --project Lab4 run lab2 -I Lab4/Lab2/INPUT.TXT -o Lab4/Lab2/OUTPUT.TXT
+        # echo "Lab 3:"
+        # echo "========================================"
+        # dotnet run --project Lab4 run lab3 -I Lab4/Lab3/INPUT.TXT -o Lab4/Lab3/OUTPUT.TXT
+
+        # Configure NuGet source for private BaGet repository
+        dotnet nuget remove source "BaGet"
+        dotnet nuget add source http://192.168.56.1:5000/v3/index.json --name "BaGet"
+        
+        # Install OBashtovyi tool
+        Write-Host "Installing tool"
+        dotnet tool install --global OBashtovyi --version 1.0.0
+        Write-Host "After Installation"
+        
+        # Check the installation
+        OBashtovyi version
       else
         echo "Cannot start project, .NET Core 8 is not installed!"
       fi
@@ -81,7 +90,6 @@ Vagrant.configure("2") do |config|
         Write-Host "Chocolatey already installed"
       }
 
-
       # Install .NET SDK 8.0 using Chocolatey
       Write-Host "Installing dotnet-8.0-sdk..."
       choco install dotnet-8.0-sdk -y
@@ -94,17 +102,30 @@ Vagrant.configure("2") do |config|
 
       # Recheck .NET Core installation and run
       if (Get-Command "dotnet" -ErrorAction SilentlyContinue) {
-        cd C:\\project
-        Write-Host "Starting project..."
-        Write-Host "Lab 1:"
-        Write-Host "========================================"
-        dotnet run --project Lab4 run lab1 -I Lab4\\Lab1\\INPUT.TXT -o Lab4\\Lab1\\OUTPUT.TXT
-        Write-Host "Lab 2:"
-        Write-Host "========================================"
-        dotnet run --project Lab4 run lab2 -I Lab4\\Lab2\\INPUT.TXT -o Lab4\\Lab2\\OUTPUT.TXT
-        Write-Host "Lab 3:"
-        Write-Host "========================================"
-        dotnet run --project Lab4 run lab3 -I Lab4\\Lab3\\INPUT.TXT -o Lab4\\Lab3\\OUTPUT.TXT
+        # cd C:\\project
+        # Write-Host "Starting project..."
+        # Write-Host "Lab 1:"
+        # Write-Host "========================================"
+        # dotnet run --project Lab4 run lab1 -I Lab4\\Lab1\\INPUT.TXT -o Lab4\\Lab1\\OUTPUT.TXT
+        # Write-Host "Lab 2:"
+        # Write-Host "========================================"
+        # dotnet run --project Lab4 run lab2 -I Lab4\\Lab2\\INPUT.TXT -o Lab4\\Lab2\\OUTPUT.TXT
+        # Write-Host "Lab 3:"
+        # Write-Host "========================================"
+        # dotnet run --project Lab4 run lab3 -I Lab4\\Lab3\\INPUT.TXT -o Lab4\\Lab3\\OUTPUT.TXT
+
+        # Configure NuGet source for private BaGet repository
+        dotnet nuget remove source "BaGet"
+        dotnet nuget add source http://192.168.56.1:5000/v3/index.json --name "BaGet"
+        
+        # Install OBashtovyi tool
+        Write-Host "Installing tool"
+        dotnet tool install --global OBashtovyi --version 1.0.0
+        Write-Host "After Installation"
+        
+        # Check the installation
+        OBashtovyi version
+
       } else {
         Write-Host "can not start project, .NET Core 8 is not installed!"
       }
