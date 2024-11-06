@@ -7,7 +7,19 @@ namespace Lab_4;
 [Subcommand(typeof(VersionCommand), typeof(RunCommand), typeof(SetPathCommand))]
 class Program
 {
-    static int Main(string[] args) => CommandLineApplication.Execute<Program>(args);
+    static int Main(string[] args)
+    {
+        try
+        {
+            CommandLineApplication.Execute<Program>(args);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Erroro occured: {ex.Message}");
+        }
+
+        return 1;
+    }
 
     private void OnExecute()
     {
@@ -45,7 +57,8 @@ class SetPathCommand
     {
         if (!string.IsNullOrEmpty(Path))
         {
-            Environment.SetEnvironmentVariable("LAB_PATH", Path);
+
+            Environment.SetEnvironmentVariable("LAB_PATH", Path, EnvironmentVariableTarget.Machine);
             console.WriteLine($"LAB_PATH set to: {Path}");
         }
         else
