@@ -4,32 +4,53 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lab1", "Lab1", "{460F5E32-F040-46C3-A563-6F91AABFC2A9}"
+	ProjectSection(SolutionItems) = preProject
+		Lab1\INPUT.txt = Lab1\INPUT.txt
+		Lab1\OUTPUT.TXT = Lab1\OUTPUT.TXT
+		Lab1\README.MD = Lab1\README.MD
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1", "Lab1\Lab1\Lab1.csproj", "{CEC117CF-0548-48C4-8354-382D783B085E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab1", "Lab1\Lab1\Lab1.csproj", "{CEC117CF-0548-48C4-8354-382D783B085E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab1.Test", "Lab1\Lab1.Test\Lab1.Test.csproj", "{8D946B6E-2918-43D3-858B-0F96E020975C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab1.Test", "Lab1\Lab1.Test\Lab1.Test.csproj", "{8D946B6E-2918-43D3-858B-0F96E020975C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lab2", "Lab2", "{9B0C4AD2-F129-495A-B89A-745D1B93F3B4}"
+	ProjectSection(SolutionItems) = preProject
+		Lab2\INPUT.txt = Lab2\INPUT.txt
+		Lab2\OUTPUT.TXT = Lab2\OUTPUT.TXT
+		Lab2\README.MD = Lab2\README.MD
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2", "Lab2\Lab2\Lab2.csproj", "{E6441119-3B04-4B42-8AE7-8ADBA7374893}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab2", "Lab2\Lab2\Lab2.csproj", "{E6441119-3B04-4B42-8AE7-8ADBA7374893}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab2.Test", "Lab2\Lab2.Test\Lab2.Test.csproj", "{42506D2D-C423-439B-AFB2-36C1FF8187E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab2.Test", "Lab2\Lab2.Test\Lab2.Test.csproj", "{42506D2D-C423-439B-AFB2-36C1FF8187E2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lab3", "Lab3", "{93120AAD-5455-43BB-A9AD-D5821B6801FA}"
+	ProjectSection(SolutionItems) = preProject
+		Lab3\INPUT.txt = Lab3\INPUT.txt
+		Lab3\OUTPUT.TXT = Lab3\OUTPUT.TXT
+		Lab3\README.md = Lab3\README.md
+	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab3", "Lab3\Lab3\Lab3.csproj", "{480FD9D7-52CD-4B10-8208-D186A5FACC0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab3", "Lab3\Lab3\Lab3.csproj", "{480FD9D7-52CD-4B10-8208-D186A5FACC0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab3.Test", "Lab3\Lab3.Test\Lab3.Test.csproj", "{9B657AE3-1991-45CB-B2D3-670BC0102DC7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab3.Test", "Lab3\Lab3.Test\Lab3.Test.csproj", "{9B657AE3-1991-45CB-B2D3-670BC0102DC7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab4", "Lab4\Lab4.csproj", "{3B503B74-CF00-4CB5-AB5C-8D61728240D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab4", "Lab4\Lab4.csproj", "{3B503B74-CF00-4CB5-AB5C-8D61728240D4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{E3820A39-AAB8-487E-848E-4B5AA9940817}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		Build.proj = Build.proj
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab5", "Lab5\Lab5.csproj", "{C49E0D6A-0274-4A27-B64B-0C2BD1FD8B9C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CEC117CF-0548-48C4-8354-382D783B085E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -60,6 +81,13 @@ Global
 		{3B503B74-CF00-4CB5-AB5C-8D61728240D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B503B74-CF00-4CB5-AB5C-8D61728240D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3B503B74-CF00-4CB5-AB5C-8D61728240D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C49E0D6A-0274-4A27-B64B-0C2BD1FD8B9C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C49E0D6A-0274-4A27-B64B-0C2BD1FD8B9C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C49E0D6A-0274-4A27-B64B-0C2BD1FD8B9C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C49E0D6A-0274-4A27-B64B-0C2BD1FD8B9C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CEC117CF-0548-48C4-8354-382D783B085E} = {460F5E32-F040-46C3-A563-6F91AABFC2A9}
@@ -68,5 +96,8 @@ Global
 		{42506D2D-C423-439B-AFB2-36C1FF8187E2} = {9B0C4AD2-F129-495A-B89A-745D1B93F3B4}
 		{480FD9D7-52CD-4B10-8208-D186A5FACC0D} = {93120AAD-5455-43BB-A9AD-D5821B6801FA}
 		{9B657AE3-1991-45CB-B2D3-670BC0102DC7} = {93120AAD-5455-43BB-A9AD-D5821B6801FA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D626656B-8A6B-4294-B457-AC1123D6EE23}
 	EndGlobalSection
 EndGlobal
