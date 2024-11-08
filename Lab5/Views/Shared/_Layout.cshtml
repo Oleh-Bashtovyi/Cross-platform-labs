@@ -20,7 +20,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
+                            <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         @if (User.Identity?.IsAuthenticated ?? false)
                         {
@@ -37,9 +37,6 @@
                             <li class="m-1">
                                 <a asp-controller="Account" asp-action="Profile" class='btn btn-primary w-100 my-1'>Profile</a>
                             </li>
-@*                             <li class="m-1">
-                                <a asp-controller="Account" asp-action="Logout" class='btn btn-secondary w-100 my-1'>Logout</a>
-                            </li> *@
                         </ul>
                     }
                     else

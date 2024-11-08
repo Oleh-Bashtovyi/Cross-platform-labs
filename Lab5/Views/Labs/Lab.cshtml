@@ -1,4 +1,7 @@
 ﻿@model LabViewModel
+@{
+    ViewData["Title"] = "Process lab";
+}
 
 <div class="container mt-4">
     <div class="card">
@@ -87,9 +90,12 @@
                 var formData = new FormData();
                 formData.append('inputFile', $('#inputFile')[0].files[0]);
                 formData.append('labNumber', '@Model.LabNumber');
-
+                console.log('HERE I AM!!!')
+                console.log('@Url.Action("ProcessLab", "Labs")')
+                console.log('@Model.LabNumber')
+                
                 $.ajax({
-                    url: '@Url.Action("ProcessLab", "Lab")',
+                    url: '@Url.Action("ProcessLab", "Labs")',
                     type: 'POST',
                     data: formData,
                     processData: false,

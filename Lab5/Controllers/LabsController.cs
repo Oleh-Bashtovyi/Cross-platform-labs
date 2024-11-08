@@ -1,6 +1,6 @@
-﻿using Lab5.Models;
-using Lab5.ViewModels;
+﻿using Lab5.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Lab5.Extensions;
 
 namespace Lab5.Controllers;
 
@@ -124,15 +124,58 @@ public class LabsController : Controller
 
 
     [HttpPost]
-    public async Task<IActionResult> ProcessLab(int labNumber, IFormFile inputFile)
+    [Route("api/labs/process-lab")]
+    public async Task<IActionResult> ProcessLab([FromForm]int labNumber, [FromForm]IFormFile inputFile)
     {
         if (inputFile == null || inputFile.Length == 0)
         {
             return BadRequest("Please upload a file");
         }
 
+        if (labNumber != 1 && labNumber != 2 && labNumber != 3)
+        {
+            return BadRequest($"Can not process lab {labNumber}. Available labs: 1, 2, 3.");
+        }
 
-        return BadRequest();
+        //create temp file
+        var tempFilePath = $"../Lab{labNumber}/INPUT_{Guid.NewGuid()}.TXT";
+
+        try
+        {
+            using (var stream = new FileStream(tempFilePath, FileMode.Create))
+            {
+                await inputFile.CopyToAsync(stream);
+            }
+
+            switch (labNumber)
+            {
+                case 1:
+                    var orders = Lab_1.IOHandler.ReadOrders(tempFilePath);
+                    var res1 = Lab_1.OrdersProblemSolver.Solve(orders);
+                    return Json(new { output = res1 });
+                case 2:
+                    var blocks = Lab_2.IOHandler.ReadProductBlocks(tempFilePath);
+                    var res2 = Lab_2.BlocksCombiningProblemSolver.Solve(blocks.ToArray());
+                    return Json(new { output = res2 });
+                case 3:
+                    var matrix = Lab_3.IOHandler.ReadMatrixFromFile(tempFilePath);
+                    var res3 = Lab_3.Solution.Solve(matrix);
+                    return Json(new { output = res3.ToFormattedString() });
+                default:
+                    return BadRequest("Invalid lab number");
+            }
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+        finally 
+        {
+            if (System.IO.File.Exists(tempFilePath))
+            {
+                System.IO.File.Delete(tempFilePath);
+            }
+        }
     }
 
 }
