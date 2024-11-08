@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Lab5.Models;
+namespace Lab5.ViewModels;
 
 public class TestCase
 {
@@ -10,7 +10,7 @@ public class TestCase
 
 public class LabViewModel
 {
-    public int LabNumber {  get; set; }
+    public int LabNumber { get; set; }
     public string TaskVariant { get; set; }
     public string Description { get; set; }
     public string InputDescription { get; set; }

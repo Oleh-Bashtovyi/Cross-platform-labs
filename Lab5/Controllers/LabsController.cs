@@ -1,4 +1,5 @@
 ﻿using Lab5.Models;
+using Lab5.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab5.Controllers;

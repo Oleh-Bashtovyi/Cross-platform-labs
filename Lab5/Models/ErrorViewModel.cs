@@ -1,11 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-
 namespace Lab5.Models;
 
-[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-[IgnoreAntiforgeryToken]
-public class ErrorViewModel : PageModel
+public class ErrorViewModel
 {
     public string? RequestId { get; set; }
 
