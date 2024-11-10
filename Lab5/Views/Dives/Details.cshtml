@@ -1,0 +1,20 @@
+﻿@model Dive
+@{
+    ViewData["Title"] = "Dive Details";
+}
+
+<h1>Dive Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Dive ID: @Model.DiveId</h5>
+        <p class="card-title">Diver ID: @Model.DiverId</p>
+        <p class="card-title">Diver Name: @Model.Diver?.Name</p>
+        <p class="card-text">Dive Site ID: @Model.DiveSiteId</p>
+        <p class="card-text">Dive Site name: @Model.DiveSite?.DiveSiteName</p>
+        <p class="card-text">Dive Date: @Model.DiveDate.ToShortDateString()</p>
+        <p class="card-text">Night Dive: @(Model.NightDiveYn ? "Yes" : "No")</p>
+        <p class="card-text">Other Details: @Model.OtherDetails</p>
+        <a asp-controller="Dives" asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

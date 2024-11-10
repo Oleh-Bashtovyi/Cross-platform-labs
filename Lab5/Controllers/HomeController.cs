@@ -1,12 +1,22 @@
 ﻿using System.Diagnostics;
+using Lab5.Services;
 using Lab5.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab5.Controllers;
 
-public class HomeController(ILogger<HomeController> logger) : Controller
+public class HomeController : Controller
 {
-    private readonly ILogger<HomeController> _logger = logger;
+    private readonly ILogger<HomeController> _logger;
+    private readonly ApiService _service;
+
+    public HomeController(ILogger<HomeController> logger, ApiService service)
+    {
+        _service = service;
+        _logger = logger;
+    }
+
+
 
     [Route("/")]
     public IActionResult Index()
@@ -15,8 +25,10 @@ public class HomeController(ILogger<HomeController> logger) : Controller
     }
 
     [Route("/privacy")]
-    public IActionResult Privacy()
+    public async Task<IActionResult> Privacy()
     {
+        var data = await _service.GetDiversAsync();
+
         return View();
     }
 

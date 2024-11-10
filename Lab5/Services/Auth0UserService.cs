@@ -84,4 +84,21 @@ public class Auth0UserService
             ProfileImage = user.Picture.ToString(),
         };
     }
+
+
+
+
+
+    public async Task<string> GetAccessTokenAsync()
+    {
+        var authClient = new AuthenticationApiClient(new Uri($"https://{_domain}"));
+        var tokenResponse = await authClient.GetTokenAsync(new ClientCredentialsTokenRequest
+        {
+            Audience = _audience,
+            ClientId = _clientId,
+            ClientSecret = _clientSecret
+        });
+        return tokenResponse.AccessToken;
+    }
+
 }

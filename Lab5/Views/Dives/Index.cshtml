@@ -1,0 +1,34 @@
+﻿@model IEnumerable<Dive>
+@{
+    ViewData["Title"] = "Dives";
+}
+
+<h1>Dives List</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Diver</th>
+            <th>Dive Site</th>
+            <th>Diver name</th>
+            <th>Dive Date</th>
+            <th>Night Dive</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dive in Model)
+        {
+            <tr>
+                <td>@dive.DiverId</td>
+                <td>@dive.DiveSite?.DiveSiteName</td>
+                <td>@dive.Diver?.Name</td>
+                <td>@dive.DiveDate.ToShortDateString()</td>
+                <td>@(dive.NightDiveYn ? "Yes" : "No")</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Details" asp-controller="Dives" asp-route-id="@dive.DiveId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

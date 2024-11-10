@@ -1,0 +1,30 @@
+﻿@model IEnumerable<DiveSite>
+@{
+    ViewData["Title"] = "Dive Sites";
+}
+
+<h1>Dive Sites List</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Site Name</th>
+            <th>Description</th>
+            <th>Details</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var site in Model)
+        {
+            <tr>
+                <td>@site.DiveSiteName</td>
+                <td>@site.DiveSiteDescription</td>
+                <td>@site.OtherDetails</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Details" asp-controller="DiveSites" asp-route-id="@site.DiveSiteId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

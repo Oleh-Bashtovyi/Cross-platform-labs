@@ -1,0 +1,15 @@
+﻿@model Diver
+@{
+    ViewData["Title"] = "Diver Details";
+}
+
+<h1>Diver Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Diver ID: @Model.DiverId</h5>
+        <p class="card-text">Diver Name: @Model.Name</p>
+        <p class="card-text">Diver Details: @Model.DiverDetails</p>
+        <a asp-controller="Divers" asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
