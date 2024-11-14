@@ -83,35 +83,35 @@ namespace Lab6.Data
                 new Diver
                 {
                     DiverId = Guid.NewGuid(),
-                    Name = "Jhon Doe",
+                    DiverName = "Jhon Doe",
                     DiverDetails = "Experienced diver"
                 },
                 new Diver
                 {
                     DiverId = Guid.NewGuid(),
-                    Name = "France Kafka",
+                    DiverName = "France Kafka",
                     DiverDetails = "Beginner diver"
                 },
                 new Diver
                 {
                     DiverId = Guid.NewGuid(),
-                    Name = "Geralt from Rivia",
+                    DiverName = "Geralt from Rivia",
                     DiverDetails = "Intermediate diver"
                 },
                 new Diver
                 {
                     DiverId = Guid.NewGuid(),
-                    Name = "Some Guy",
+                    DiverName = "Some Guy",
                     DiverDetails = "Advanced diver"
                 },
                 new Diver
                 {
                     DiverId = Guid.NewGuid(),
-                    Name = "Henry Martines",
+                    DiverName = "Henry Martines",
                     DiverDetails = "Expert diver"
                 }
             };
-                Divers.AddRange(divers);
+            Divers.AddRange(divers);
 
             // Додавання записів для DiveSiteType
             var diveSiteTypes = new List<DiveSiteType>
@@ -198,7 +198,7 @@ namespace Lab6.Data
                     DiveId = Guid.NewGuid(),
                     DiverId = divers[0].DiverId,
                     DiveSiteId = diveSites[0].DiveSiteId,
-                    DiveDate = DateTime.Now.AddDays(-30),
+                    DiveDate = DateTime.UtcNow.AddDays(-30),  
                     NightDiveYn = true,
                     OtherDetails = "Night dive in the cave"
                 },
@@ -207,7 +207,7 @@ namespace Lab6.Data
                     DiveId = Guid.NewGuid(),
                     DiverId = divers[1].DiverId,
                     DiveSiteId = diveSites[1].DiveSiteId,
-                    DiveDate = DateTime.Now.AddDays(-20),
+                    DiveDate = DateTime.UtcNow.AddDays(-20),  
                     NightDiveYn = false,
                     OtherDetails = "Coral reef exploration"
                 },
@@ -216,7 +216,7 @@ namespace Lab6.Data
                     DiveId = Guid.NewGuid(),
                     DiverId = divers[2].DiverId,
                     DiveSiteId = diveSites[2].DiveSiteId,
-                    DiveDate = DateTime.Now.AddDays(-10),
+                    DiveDate = DateTime.UtcNow.AddDays(-10),  
                     NightDiveYn = true,
                     OtherDetails = "Exploring the wreck"
                 },
@@ -225,7 +225,7 @@ namespace Lab6.Data
                     DiveId = Guid.NewGuid(),
                     DiverId = divers[3].DiverId,
                     DiveSiteId = diveSites[3].DiveSiteId,
-                    DiveDate = DateTime.Now.AddDays(-5),
+                    DiveDate = DateTime.UtcNow.AddDays(-5),  
                     NightDiveYn = false,
                     OtherDetails = "Shore diving"
                 },
@@ -234,66 +234,14 @@ namespace Lab6.Data
                     DiveId = Guid.NewGuid(),
                     DiverId = divers[4].DiverId,
                     DiveSiteId = diveSites[4].DiveSiteId,
-                    DiveDate = DateTime.Now,
+                    DiveDate = DateTime.UtcNow,  
                     NightDiveYn = true,
                     OtherDetails = "Deep open sea dive"
                 }
             };
             Dives.AddRange(dives);
 
-            // Збереження змін
             SaveChanges();
         }
-
-
-
-
-
-
-        // Add example seed data method
-        //public void SeedData()
-        //{
-        //    if (DiveOrganisations.Any()) return;
-
-        //    // Add sample dive organizations
-        //    var organisations = new List<DiveOrganisation>
-        //    {
-        //        new DiveOrganisation
-        //        {
-        //            OrganisationCode = "PADI",
-        //            CountryOfOrigin = "US",
-        //            OrganisationDetails = "Professional Association of Diving Instructors"
-        //        },
-        //        new DiveOrganisation
-        //        {
-        //            OrganisationCode = "NAUI",
-        //            CountryOfOrigin = "US",
-        //            OrganisationDetails = "National Association of Underwater Instructors"
-        //        }
-        //    };
-        //    DiveOrganisations.AddRange(organisations);
-        //    SaveChanges();
-
-        //    // Add sample certification levels
-        //    var certifications = new List<LevelOfCertification>
-        //    {
-        //        new LevelOfCertification
-        //        {
-        //            CertificationCode = "OW",
-        //            OrganisationCode = "PADI",
-        //            CertificationName = "Open Water",
-        //            OtherDetails = "Entry level certification"
-        //        },
-        //        new LevelOfCertification
-        //        {
-        //            CertificationCode = "AOW",
-        //            OrganisationCode = "PADI",
-        //            CertificationName = "Advanced Open Water",
-        //            OtherDetails = "Advanced certification"
-        //        }
-        //    };
-        //    LevelsOfCertification.AddRange(certifications);
-        //    SaveChanges();
-        //}
     }
 }

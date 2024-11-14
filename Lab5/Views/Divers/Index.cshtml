@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Diver>
+﻿@model IEnumerable<DiverResponse>
 @{
     ViewData["Title"] = "Divers";
 }
@@ -19,7 +19,7 @@
         {
             <tr>
                 <td>@diver.DiverId</td>
-                <td>@diver.Name</td>
+                <td>@diver.DiverName</td>
                 <td>@diver.DiverDetails</td>
                 <td>
                     <a class="btn btn-primary" asp-action="Details" asp-controller="Divers" asp-route-id="@diver.DiverId">Details</a>

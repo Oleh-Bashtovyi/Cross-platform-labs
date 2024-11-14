@@ -1,4 +1,4 @@
-﻿using Lab6.Data;
+﻿/*using Lab6.Data;
 using Lab6.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -47,32 +47,32 @@ public class DivesController : ControllerBase
 
 
 
-    [HttpGet]
-    [Produces("application/json")]
-    public async Task<ActionResult<IEnumerable<Dive>>> GetDives()
-    {
-        var dives = await _context.Dives
-            .Include(d => d.Diver)
-            .Include(d => d.DiveSite)
-            .ToListAsync();
+    //[HttpGet]
+    //[Produces("application/json")]
+    //public async Task<ActionResult<IEnumerable<Dive>>> GetDives()
+    //{
+    //    var dives = await _context.Dives
+    //        .Include(d => d.Diver)
+    //        .Include(d => d.DiveSite)
+    //        .ToListAsync();
 
-        return Ok(dives);
-    }
+    //    return Ok(dives);
+    //}
 
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Dive>> GetDive(Guid id)
-    {
-        var dive = await _context.Dives
-            .Include(d => d.Diver)
-            .Include(d => d.DiveSite)
-            .FirstOrDefaultAsync(d => d.DiveId == id);
+    //[HttpGet("{id}")]
+    //public async Task<ActionResult<Dive>> GetDive(Guid id)
+    //{
+    //    var dive = await _context.Dives
+    //        .Include(d => d.Diver)
+    //        .Include(d => d.DiveSite)
+    //        .FirstOrDefaultAsync(d => d.DiveId == id);
 
-        if (dive == null)
-        {
-            return NotFound();
-        }
+    //    if (dive == null)
+    //    {
+    //        return NotFound();
+    //    }
 
-        return dive;
-    }
-}
+    //    return dive;
+    //}
+}*/

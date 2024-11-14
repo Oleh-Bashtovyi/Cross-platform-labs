@@ -7,7 +7,7 @@ public class Diver
     [Key]
     public Guid DiverId { get; set; }
 
-    public string Name { get; set; }
+    public string DiverName { get; set; }
     public string DiverDetails { get; set; }
 
     public ICollection<DiverCertification> Certifications { get; set; }

@@ -1,4 +1,6 @@
-﻿using Lab6.Data;
+﻿using Azure.Core;
+using Lab6.Data;
+using Lab6.DTO;
 using Lab6.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -19,23 +21,75 @@ public class DivesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Dive>>> GetDives()
+    public async Task<ActionResult<IEnumerable<Dive>>> GetDives([FromQuery] DiveRequest request)
     {
-        return await _context.Dives.ToListAsync();
+        var query = FilterDives(_context.Dives.AsQueryable(), request);
+
+        var result = await query.Select(d => new
+        {
+            d.DiveId,
+            d.DiveDate,
+            d.NightDiveYn,
+            d.OtherDetails,
+            d.DiverId,
+            d.DiveSiteId,
+            //Join
+            d.Diver.DiverName,
+            d.DiveSite.DiveSiteName
+        }).ToListAsync();
+
+        return Ok(result);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<Dive>> GetDive(Guid id)
+
+    private IQueryable<Dive> FilterDives(IQueryable<Dive> query, DiveRequest request)
     {
-        var dive = await _context.Dives.FindAsync(id);
+        if (request.StartDate.HasValue)
+            query = query.Where(d => d.DiveDate >= request.StartDate);
+
+        if (request.EndDate.HasValue)
+            query = query.Where(d => d.DiveDate <= request.EndDate);
+
+        if (!string.IsNullOrEmpty(request.DiverId))
+            query = query.Where(d => d.DiverId.ToString().StartsWith(request.DiverId));
+
+        if (!string.IsNullOrEmpty(request.SiteNameStart))
+            query = query.Where(d => d.DiveSite.DiveSiteName.ToLower().StartsWith(request.SiteNameStart.ToLower()));
+
+        if (!string.IsNullOrEmpty(request.SiteNameEnd))
+            query = query.Where(d => d.DiveSite.DiveSiteName.ToLower().EndsWith(request.SiteNameEnd.ToLower()));
+
+        return query;
+    }
+
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult> GetDive(Guid id)
+    {
+        var dive = await _context.Dives
+            .Where(d => d.DiveId == id)
+            .Select(d => new
+            {
+                d.DiveId,
+                d.DiveDate,
+                d.NightDiveYn,
+                d.OtherDetails,
+                d.DiverId,
+                d.DiveSiteId,
+                //Join
+                d.Diver.DiverName,
+                d.DiveSite.DiveSiteName
+            })
+            .FirstOrDefaultAsync();
 
         if (dive == null)
         {
             return NotFound();
         }
 
-        return dive;
+        return Ok(dive);
     }
+
 
     [HttpPost]
     public async Task<ActionResult<Dive>> CreateDive(Dive dive)

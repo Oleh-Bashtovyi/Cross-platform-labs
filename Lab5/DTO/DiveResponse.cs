@@ -1,6 +1,6 @@
 ﻿namespace Lab5.DTO;
 
-public class Dive
+public class DiveResponse
 {
     public Guid DiveId { get; set; }
     public Guid DiverId { get; set; }
@@ -8,6 +8,6 @@ public class Dive
     public DateTime DiveDate { get; set; }
     public bool NightDiveYn { get; set; }
     public string OtherDetails { get; set; }
-    public Diver Diver { get; set; }
-    public DiveSite DiveSite { get; set; }
+    public string DiverName { get; set; }
+    public string DiveSiteName { get; set; }
 }

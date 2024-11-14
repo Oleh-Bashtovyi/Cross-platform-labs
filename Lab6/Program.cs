@@ -5,9 +5,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 using Lab6.Data;
 using System.Text.Json.Serialization;
+using System.Text.Json;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
-// Add services to the container.
 
 builder.Services.AddControllers(options =>
 {
@@ -15,8 +17,9 @@ builder.Services.AddControllers(options =>
 }).AddJsonOptions(options =>
 {
     options.JsonSerializerOptions.PropertyNameCaseInsensitive = true;
+    options.JsonSerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
     options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
-    options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -27,15 +30,6 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v2", new OpenApiInfo { Title = "My API V2", Version = "v2" });
     c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 });
-
-//builder.Services.AddControllers()
-//    .AddJsonOptions(options =>
-//    {
-//        options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
-//    });
-
-
-
 
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
@@ -63,10 +57,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 });
 
 
-
-
-
-// Add versioning configuration
 builder.Services.AddApiVersioning(options =>
 {
     options.ReportApiVersions = true;
@@ -74,29 +64,6 @@ builder.Services.AddApiVersioning(options =>
     options.DefaultApiVersion = new ApiVersion(1, 0); // Default to v1
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
 });
-
-// Configure JWT Authentication
-//builder.Services.AddAuthentication(options =>
-//{
-//    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-//    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-//})
-//.AddJwtBearer(options =>
-//{
-//    options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}/";
-//    options.Audience = builder.Configuration["Auth0:Audience"];
-//    options.TokenValidationParameters = new TokenValidationParameters
-//    {
-//        ValidateIssuer = true,
-//        ValidIssuer = $"https://{builder.Configuration["Auth0:Domain"]}/",
-//        ValidateAudience = true,
-//        ValidAudience = builder.Configuration["Auth0:Audience"],
-//        ValidateLifetime = true,
-//        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("ZliPXyyIKw7ykLpN102cDEGpFWXiaME7RZfCq0AXjpKeOk9FOd6XMVb9zQOhG7Nj")),
-//        ValidateIssuerSigningKey = true,
-//    };
-//});
-
 
 
 
@@ -106,6 +73,15 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
         options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
         options.Audience = builder.Configuration["Auth0:Audience"];
+
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidIssuer = $"https://{builder.Configuration["Auth0:Domain"]}",
+            ValidateAudience = true,
+            ValidAudience = builder.Configuration["Auth0:Audience"],
+            ValidateLifetime = true
+        };
     });
 
 builder.Services.AddCors(options =>
@@ -118,13 +94,6 @@ builder.Services.AddCors(options =>
 });
 
 
-
-/*builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("ApiScope", policy => policy.RequireClaim("scope", "read:messages"));
-});
-*/
-
 var app = builder.Build();
 
 using (var scope = app.Services.CreateScope())
@@ -132,7 +101,8 @@ using (var scope = app.Services.CreateScope())
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
     var dbType = app.Configuration["DatabaseType"]?.ToLower();
-    // Виконуємо міграції тільки для реляційних БД
+
+    // Виконуємо міграції тільки для реляційних БД (для inmemory не працює)
     if (dbType is "mssql" or "postgres" or "sqlite")
     {
         context.Database.Migrate();
@@ -153,35 +123,3 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
-
-
-
-
-
-
-
-//var builder = WebApplication.CreateBuilder(args);
-
-//// Add services to the container.
-
-//builder.Services.AddControllers();
-//// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-//builder.Services.AddEndpointsApiExplorer();
-//builder.Services.AddSwaggerGen();
-
-//var app = builder.Build();
-
-//// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-//app.UseHttpsRedirection();
-
-//app.UseAuthorization();
-
-//app.MapControllers();
-
-//app.Run();

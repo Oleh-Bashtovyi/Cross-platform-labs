@@ -31,7 +31,7 @@ public class ApiService
 
 
 
-    public async Task<List<Diver>> GetDiversAsync()
+    public async Task<List<DiverResponse>> GetDiversAsync()
     {
         await SetAuthorizationHeaderAsync();
 
@@ -42,12 +42,12 @@ public class ApiService
 
         Console.WriteLine($"[GetDivers] - Received JSON: {json}");
 
-        var divers = JsonSerializer.Deserialize<List<Diver>>(json, _serializationOptions);
+        var divers = JsonSerializer.Deserialize<List<DiverResponse>>(json, _serializationOptions);
 
-        return divers ?? new List<Diver>(0);
+        return divers ?? new List<DiverResponse>(0);
     }
 
-    public async Task<Diver?> GetDiverAsync(Guid id)
+    public async Task<DiverResponse?> GetDiverAsync(Guid id)
     {
         await SetAuthorizationHeaderAsync();
 
@@ -58,13 +58,13 @@ public class ApiService
 
         Console.WriteLine($"[GetDiver] - Received JSON: {json}");
 
-        var diver = JsonSerializer.Deserialize<Diver>(json, _serializationOptions);
+        var diver = JsonSerializer.Deserialize<DiverResponse>(json, _serializationOptions);
 
         return diver;
     }
 
 
-    public async Task<List<DiveSite>> GetDiveSitesAsync()
+    public async Task<List<DiveSiteResponse>> GetDiveSitesAsync()
     {
         await SetAuthorizationHeaderAsync();
 
@@ -75,12 +75,12 @@ public class ApiService
 
         Console.WriteLine($"[GetDiveSites] - Received JSON: {json}");
 
-        var diveSites = JsonSerializer.Deserialize<List<DiveSite>>(json, _serializationOptions);
+        var diveSites = JsonSerializer.Deserialize<List<DiveSiteResponse>>(json, _serializationOptions);
 
-        return diveSites ?? new List<DiveSite>(0);
+        return diveSites ?? new List<DiveSiteResponse>(0);
     }
 
-    public async Task<DiveSite?> GetDiveSiteAsync(Guid id)
+    public async Task<DiveSiteResponse?> GetDiveSiteAsync(Guid id)
     {
         await SetAuthorizationHeaderAsync();
 
@@ -91,7 +91,7 @@ public class ApiService
 
         Console.WriteLine($"[GetDiveSite] - Received JSON: {json}");
 
-        var diveSite = JsonSerializer.Deserialize<DiveSite>(json, _serializationOptions);
+        var diveSite = JsonSerializer.Deserialize<DiveSiteResponse>(json, _serializationOptions);
 
         return diveSite;
     }
@@ -101,23 +101,46 @@ public class ApiService
 
 
 
-    public async Task<List<Dive>> GetDivesAsync(string apiVersion = "v1")
+    //public async Task<List<Dive>> GetDivesAsync(DiveRequest request, string apiVersion = "v1")
+    //{
+    //    await SetAuthorizationHeaderAsync();
+
+    //    var response = await _httpClient.GetAsync($"api/{apiVersion}/Dives");
+    //    response.EnsureSuccessStatusCode();
+
+    //    var json = await response.Content.ReadAsStringAsync();
+
+    //    Console.WriteLine($"[GetDives] - Received JSON: {json}");
+
+    //    var dives = JsonSerializer.Deserialize<List<Dive>>(json, _serializationOptions);
+
+    //    return dives ?? new List<Dive>(0);
+    //}
+
+
+    public async Task<List<DiveResponse>> GetDivesAsync(DiveRequest request, string apiVersion = "v1")
     {
         await SetAuthorizationHeaderAsync();
 
-        var response = await _httpClient.GetAsync($"api/{apiVersion}/Dives");
+        var query = $"api/{apiVersion}/dives?" +
+                    $"startDate={request.StartDate}&endDate={request.EndDate}&diverId={request.DiverId}" +
+                    $"&siteNameStart={request.SiteNameStart}&siteNameEnd={request.SiteNameEnd}";
+
+        var response = await _httpClient.GetAsync(query);
         response.EnsureSuccessStatusCode();
 
         var json = await response.Content.ReadAsStringAsync();
-
-        Console.WriteLine($"[GetDives] - Received JSON: {json}");
-
-        var dives = JsonSerializer.Deserialize<List<Dive>>(json, _serializationOptions);
-
-        return dives ?? new List<Dive>(0);
+        return JsonSerializer.Deserialize<List<DiveResponse>>(json, _serializationOptions) ?? new List<DiveResponse>();
     }
 
-    public async Task<Dive?> GetDiveAsync(Guid id, string apiVersion = "v1")
+
+
+
+
+
+
+
+    public async Task<DiveResponse?> GetDiveAsync(Guid id, string apiVersion = "v1")
     {
         await SetAuthorizationHeaderAsync();
 
@@ -126,9 +149,9 @@ public class ApiService
 
         var json = await response.Content.ReadAsStringAsync();
 
-        Console.WriteLine($"[GetDives] - Received JSON: {json}");
+        Console.WriteLine($"[GetDive] - Received JSON: {json}");
 
-        var dive = JsonSerializer.Deserialize<Dive>(json, _serializationOptions);
+        var dive = JsonSerializer.Deserialize<DiveResponse>(json, _serializationOptions);
 
         return dive;
     }

@@ -138,7 +138,7 @@ public class LabsController : Controller
         }
 
         //create temp file
-        var tempFilePath = $"../Lab{labNumber}/INPUT_{Guid.NewGuid()}.TXT";
+        var tempFilePath = $"TempLabFiles/INPUT_LAB-{labNumber}_{Guid.NewGuid()}.TXT";
 
         try
         {

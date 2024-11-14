@@ -2,25 +2,20 @@ using Lab_3;
 
 namespace LabLibrary;
 
-public class Lab3 : LabBase
+public class Lab3
 {
-    public override void Run(string inputFile, string outputFile, bool enableLog = false)
+    public static void Run(string inputFile, string outputFile)
     {
+        Console.WriteLine("LAB #3");
+        Console.WriteLine("Input data:");
         var matrix = IOHandler.ReadMatrixFromFile(inputFile);
+        PrintMatrix(matrix);
+        Console.WriteLine("Output data:");
         var result = Solution.Solve(matrix);
+        PrintMatrix(result);
         IOHandler.WriteMatrixToFile(result, outputFile);
-
-        if (enableLog)
-        {
-            Console.WriteLine("LAB #3");
-            Console.WriteLine("Input data:");
-            PrintMatrix(matrix);
-            Console.WriteLine("Output data:");
-            PrintMatrix(result);
-            Console.WriteLine($"Result successfuly written to: {outputFile}");
-        }
+        Console.WriteLine($"Result successfuly written to: {outputFile}");
     }
-
 
     private static void PrintMatrix(int[,] matrix)
     {

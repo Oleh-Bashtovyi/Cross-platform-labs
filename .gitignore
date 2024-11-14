@@ -8,6 +8,13 @@
 .vagrant/
 .vagrant
 Lab4/nupkg/
+**/Migrations/
+lab_1_tasks.docx
+lab_2_tasks.docx
+lab_3_tasks.docx
+lab_4_tasks.docx
+lab_5_tasks.docx
+lab_6_tasks.docx
 
 
 # User-specific files
