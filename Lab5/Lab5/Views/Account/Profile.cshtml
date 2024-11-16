@@ -1,0 +1,31 @@
+﻿@model Lab5.ViewModels.UserProfileViewModel
+ @{
+     ViewData["Title"] = "User Profile";
+ }
+
+
+<div class="container mt-5">
+    <div class="card" style="max-width: 600px; margin: auto;">
+        <div class="card-header text-center">
+            <h3>Профіль користувача</h3>
+        </div>
+        <div class="card-body text-center">
+            <!-- Profile Image -->
+            <img src="@Model.ProfileImage" alt="Profile Image" class="rounded-circle mb-3" style="width: 120px; height: 120px; object-fit: cover;">
+
+            <!-- User Information -->
+            <h4 class="card-title">@Model.FullName</h4>
+            <p class="text-muted">@Model.Username</p>
+
+            <div class="mt-4 text-start">
+                <p><strong>Email:</strong> @Model.Email</p>
+                <p><strong>Номер телефону:</strong> @Model.PhoneNumber</p>
+            </div>
+        </div>
+        <div class="card-footer text-center">
+            <form asp-controller="Account" asp-action="Logout" method="post">
+                <button type="submit" class="btn btn-danger">Logout</button>
+            </form>
+        </div>
+    </div>
+</div>

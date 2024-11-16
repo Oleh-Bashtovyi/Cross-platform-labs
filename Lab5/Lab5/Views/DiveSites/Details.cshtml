@@ -1,0 +1,15 @@
+﻿@model DiveSiteResponse
+@{
+    ViewData["Title"] = "Dive Site Details";
+}
+
+<h1>Dive Site Details</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Dive Site Name: @Model.DiveSiteName</h5>
+        <p class="card-text">Description: @Model.DiveSiteDescription</p>
+        <p class="card-text">Other Details: @Model.OtherDetails</p>
+        <a asp-controller="DiveSites" asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

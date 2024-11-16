@@ -1,0 +1,106 @@
+﻿@model IEnumerable<DiveResponse>
+@{
+    ViewData["Title"] = "Dives";
+}
+
+<h1>Dives List</h1>
+
+<!-- Search Form -->
+<form asp-action="Search" method="get" class="mb-4">
+    <div class="row">
+        <div class="col-md-3">
+            <label for="startDate" class="form-label">Start Date</label>
+            <input type="date" value="@ViewData["StartDate"]" class="form-control" id="startDate" name="startDate" />
+        </div>
+        <div class="col-md-3">
+            <label for="endDate" class="form-label">End Date</label>
+            <input type="date" value="@ViewData["EndDate"]" class="form-control" id="endDate" name="endDate" />
+        </div>
+        <div class="col-md-3">
+            <label for="diverId" class="form-label">Diver ID</label>
+            <input type="text" value="@ViewData["DiverId"]" class="form-control" id="diverId" name="diverId" placeholder="Diver ID" />
+        </div>
+        <div class="col-md-3">
+            <label for="siteNameStart" class="form-label">Site Name Starts With</label>
+            <input type="text" value="@ViewData["SiteNameStart"]" class="form-control" id="siteNameStart" name="siteNameStart" placeholder="Start of Site Name" />
+        </div>
+        <div class="col-md-3">
+            <label for="siteNameEnd" class="form-label">Site Name Ends With</label>
+            <input type="text" value="@ViewData["SiteNameEnd"]" class="form-control" id="siteNameEnd" name="siteNameEnd" placeholder="End of Site Name" />
+        </div>
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Search</button>
+</form>
+
+<!-- Dives Table -->
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Diver</th>
+            <th>Dive Site</th>
+            <th>Diver Name</th>
+            <th>Dive Date</th>
+            <th>Night Dive</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dive in Model)
+        {
+            <tr>
+                <td>@dive.DiverId</td>
+                <td>@dive.DiveSiteName</td>
+                <td>@dive.DiverName</td>
+                <td>@dive.DiveDate.ToShortDateString()</td>
+                <td>@(dive.NightDiveYn ? "Yes" : "No")</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Details" asp-controller="Dives" asp-route-id="@dive.DiveId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+
+
+
+
+
+
+@* @model IEnumerable<Dive>
+@{
+    ViewData["Title"] = "Dives";
+}
+
+<h1>Dives List</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Diver</th>
+            <th>Dive Site</th>
+            <th>Diver name</th>
+            <th>Dive Date</th>
+            <th>Night Dive</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var dive in Model)
+        {
+            <tr>
+                <td>@dive.DiverId</td>
+                <td>@dive.DiveSiteName</td>
+                <td>@dive.DiverName</td>
+                <td>@dive.DiveDate.ToShortDateString()</td>
+                <td>@(dive.NightDiveYn ? "Yes" : "No")</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Details" asp-controller="Dives" asp-route-id="@dive.DiveId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+ *@

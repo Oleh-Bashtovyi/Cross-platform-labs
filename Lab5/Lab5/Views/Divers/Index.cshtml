@@ -1,0 +1,30 @@
+﻿@model IEnumerable<DiverResponse>
+@{
+    ViewData["Title"] = "Divers";
+}
+
+<h1>Divers List</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Diver ID</th>
+            <th>Diver Name</th>
+            <th>Diver Details</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var diver in Model)
+        {
+            <tr>
+                <td>@diver.DiverId</td>
+                <td>@diver.DiverName</td>
+                <td>@diver.DiverDetails</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Details" asp-controller="Divers" asp-route-id="@diver.DiverId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

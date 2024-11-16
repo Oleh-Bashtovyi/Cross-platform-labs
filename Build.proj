@@ -18,7 +18,7 @@
 
   <Target Name="Run">
     <PropertyGroup>
-      <MainProject>App\App.csproj</MainProject>
+      <MainProject>$(Solution)\$(Solution).csproj</MainProject>
     </PropertyGroup>
     <Exec Command="dotnet run --project &quot;$(MainProject)&quot;" WorkingDirectory="$(Solution)" />
   </Target>
