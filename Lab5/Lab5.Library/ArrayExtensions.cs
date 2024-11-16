@@ -1,4 +1,4 @@
-﻿namespace Lab5.Extensions;
+﻿namespace LabLibrary.Extensions;
 
 public static class ArrayExtensions
 {

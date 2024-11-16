@@ -52,7 +52,7 @@ Vagrant.configure("2") do |config|
     end
 
     # Synced folder for Windows VM
-    windows.vm.synced_folder ".", "C:/project"
+    windows.vm.synced_folder "..", "C:/project"
     
     # Provisioning .NET Core 8 installation using Chocolatey
     windows.vm.provision "shell", run: "always", inline: <<-SHELL

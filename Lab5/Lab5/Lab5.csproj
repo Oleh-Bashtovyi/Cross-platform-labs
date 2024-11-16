@@ -12,15 +12,9 @@
     <PackageReference Include="Auth0.ManagementApi" Version="7.28.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Lab1\Lab1\Lab1.csproj" />
-    <ProjectReference Include="..\Lab2\Lab2\Lab2.csproj" />
-    <ProjectReference Include="..\Lab3\Lab3\Lab3.csproj" />
-  </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
-    <Folder Include="TempLabFiles\" />
+    <ProjectReference Include="..\Lab5.Library\Lab5.Library.csproj" />
   </ItemGroup>
 
 </Project>

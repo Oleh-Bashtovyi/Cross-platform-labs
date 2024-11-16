@@ -100,14 +100,6 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
-    var dbType = app.Configuration["DatabaseType"]?.ToLower();
-
-    // Виконуємо міграції тільки для реляційних БД (для inmemory не працює)
-    if (dbType is "mssql" or "postgres" or "sqlite")
-    {
-        context.Database.Migrate();
-    }
-
     context.SeedData();
 }
 

@@ -8,7 +8,7 @@
 .vagrant/
 .vagrant
 Lab4/nupkg/
-**/Migrations/
+#**/Migrations/
 lab_1_tasks.docx
 lab_2_tasks.docx
 lab_3_tasks.docx

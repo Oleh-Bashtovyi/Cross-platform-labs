@@ -1,4 +1,5 @@
 using Lab5.Services;
+using Microsoft.Extensions.Configuration;
 using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -7,7 +8,13 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<Auth0UserService>();
 builder.Services.AddHttpClient<ApiService>(client =>
 {
-    var apiAppUrl = builder.Configuration["ApiApp:Url"] ?? throw new ArgumentException("Api app url is empty!");
+    var apiAppUrl = builder.Environment.IsDevelopment() ? 
+                builder.Configuration["ApiApp:BaseUrl"] : 
+                builder.Configuration["ApiApp:SecureUrl"];
+
+    if (apiAppUrl == null)
+        throw new InvalidOperationException("Api app url must not be empty!");
+
     client.BaseAddress = new Uri(apiAppUrl);
 });
 

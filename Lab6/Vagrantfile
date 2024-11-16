@@ -1,0 +1,80 @@
+Vagrant.configure("2") do |config|
+
+  config.vm.define "lab6" do |lab6|
+    lab6.vm.box = "ubuntu/jammy64"
+    lab6.vm.hostname = "lab6-vm"
+    lab6.vm.box_check_update = false
+    lab6.vm.network "public_network"
+    lab6.vm.network "forwarded_port", guest: 7142, host: 7142
+    lab6.vm.network "forwarded_port", guest: 5203, host: 5203
+    lab6.vm.provider "virtualbox" do |vb|
+      vb.memory = "4096"
+      vb.cpus = 4
+    end
+
+    # Synced folder for Linux VM
+    lab6.vm.synced_folder "..", "/home/vagrant/project"
+
+    # Provisioning .NET Core 8.0 installation on Ubuntu
+    lab6.vm.provision "shell", run: "always", inline: <<-SHELL
+
+      # Update the system
+      apt-get update
+      apt-get upgrade -y
+
+      # Install required packages
+      apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+
+      # Install the Microsoft GPG key
+      wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
+      sudo dpkg -i packages-microsoft-prod.deb
+
+      # Install .NET SDK
+      sudo apt-get update
+      sudo apt-get install -y dotnet-sdk-8.0
+
+      # Install .NET Runtime
+      sudo apt-get install -y dotnet-runtime-8.0
+
+      # Check the installation
+      echo "Verify that .NET Core 8 is installed..."
+      dotnet --version
+      dotnet --list-sdks
+      dotnet --list-runtimes
+
+      # Install PostgreSQL
+      sudo apt-get install -y postgresql postgresql-contrib
+
+      # Start PostgreSQL and enable it to start automatically
+      sudo systemctl enable postgresql
+      sudo systemctl start postgresql
+
+      # Set password for the postgres user
+      sudo -u postgres psql -c "ALTER USER postgres PASSWORD 'postgres';"
+
+      # Configure PostgreSQL to accept connections from any address
+      sudo sed -i "s/#listen_addresses = 'localhost'/listen_addresses = 'localhost'/g" /etc/postgresql/14/main/postgresql.conf
+      echo "host    all             all             127.0.0.1/32            md5" | sudo tee -a /etc/postgresql/14/main/pg_hba.conf
+
+      # Restart PostgreSQL to apply changes
+      sudo systemctl restart postgresql
+
+      # Set timezone to (GMT+7)
+      sudo timedatectl set-timezone Asia/Bangkok
+
+      dotnet tool install --global dotnet-ef
+      cd /home/vagrant/project/Lab6/Lab6
+      
+      # Run migrations
+      dotnet ef database update
+
+      dotnet dev-certs https --clean
+      dotnet dev-certs https --trust
+
+      
+      # Run the project
+      echo "Trying to launch project..."
+      dotnet run --urls "https://localhost:7142"
+    SHELL
+  end
+end
