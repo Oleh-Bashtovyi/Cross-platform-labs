@@ -1,5 +1,4 @@
 ﻿using McMaster.Extensions.CommandLineUtils;
-using LabLibrary;
 using Lab4.Commands;
 
 namespace Lab_4;

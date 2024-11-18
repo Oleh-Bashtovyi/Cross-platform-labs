@@ -5,39 +5,47 @@ Vagrant.configure("2") do |config|
     ubuntu.vm.box = "ubuntu/jammy64"
     ubuntu.vm.box_check_update = false
     ubuntu.vm.hostname = "ubuntu-vm"
-    ubuntu.vm.network "public_network", use_dhcp_assigned_default_route: true
-    ubuntu.vm.network "forwarded_port", guest: 5000, host: 5000
+    ubuntu.vm.network "private_network", ip: "192.168.56.10"
     ubuntu.vm.provider "virtualbox" do |vb|
       vb.memory = "4096"
-      vb.cpus = 4
+      vb.cpus = 3
     end
 
-    # Synced folder for Linux VM
-    ubuntu.vm.synced_folder "..", "/home/vagrant/project"
-
-    # Provisioning .NET Core 8.0 installation on Ubuntu
+    ubuntu.vm.boot_timeout = 300 
+    ubuntu.vm.synced_folder ".", "/home/vagrant/project"
+    
     ubuntu.vm.provision "shell", run: "always", inline: <<-SHELL
-    # Update the system
-    sudo apt-get update
-    sudo apt-get install -y wget apt-transport-https
+      # Update the system
+      sudo apt-get update
+      sudo apt-get install -y wget apt-transport-https
 
-    # Install the Microsoft GPG key
-    wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
-    sudo dpkg -i packages-microsoft-prod.deb
+      # Install the Microsoft GPG key
+      wget https://packages.microsoft.com/config/ubuntu/22.04/packages-microsoft-prod.deb
+      sudo dpkg -i packages-microsoft-prod.deb
 
-    # Install .NET SDK
-    sudo apt-get update
-    sudo apt-get install -y dotnet-sdk-8.0
+      # Install .NET SDK
+      sudo apt-get update
+      sudo apt-get install -y dotnet-sdk-8.0
 
-    # Check the installation
-    echo "Verify that .NET Core 8 is installed..."
-    dotnet --version
-    dotnet --list-sdks
-    dotnet --list-runtimes
+      # Check the installation
+      echo "Verify that .NET Core 8 is installed..."
+      dotnet --version
+      dotnet --list-sdks
+      dotnet --list-runtimes
 
-    dotnet tool install --global --version 1.0.0 --add-source http://10.0.2.2:5000/v3/index.json --verbosity detailed OBashtovyi
-    OBashtovyi version
+      if command -v dotnet &> /dev/null; then
 
+        # Installing tool
+        dotnet nuget add source http://192.168.56.1:5000/v3/index.json --name "BaGet"
+        dotnet tool install --global OBashtovyi --version 1.0.0
+        
+        # Check the installation
+        cd /home/vagrant/project
+        OBashtovyi version
+        OBashtovyi run lab1 -I Lab4/Lab1/INPUT.TXT -o Lab4/Lab1/OUTPUT.TXT
+      else
+        echo "Cannot start project, .NET Core 8 is not installed!"
+      fi
     SHELL
   end
 
@@ -45,50 +53,46 @@ Vagrant.configure("2") do |config|
   # Windows VM
   config.vm.define "windows" do |windows|
     windows.vm.box = "gusztavvargadr/windows-10"
-    windows.vm.network "public_network"
+    windows.vm.network "private_network", ip: "192.168.56.11"
     windows.vm.provider "virtualbox" do |vb|
-      vb.memory = "6096"
-      vb.cpus = 4
+      vb.memory = "4096"
+      vb.cpus = 3
     end
 
-    # Synced folder for Windows VM
-    windows.vm.synced_folder "..", "C:/project"
+    windows.vm.boot_timeout = 300 
+    windows.vm.synced_folder ".", "C:/project"
     
-    # Provisioning .NET Core 8 installation using Chocolatey
     windows.vm.provision "shell", run: "always", inline: <<-SHELL
-      # Set execution policy to allow the installation script to run
-      Set-ExecutionPolicy Bypass -Scope Process -Force
-
-      # Install Chocolatey if it's not already installed
+      # Install Chocolatey
       if (-not (Get-Command "choco" -ErrorAction SilentlyContinue)) {
-        Write-Host "Installing Chocolatey..."
+        Set-ExecutionPolicy Bypass -Scope Process -Force
         [System.Net.WebClient]::new().DownloadString('https://chocolatey.org/install.ps1') | Invoke-Expression
       }
-      else{
-        Write-Host "Chocolatey already installed"
-      }
 
-      # Install .NET SDK 8.0 using Chocolatey
-      Write-Host "Installing dotnet-8.0-sdk..."
+      # Install .NET SDK 8.0 and runtime
       choco install dotnet-8.0-sdk -y
+      choco install dotnet-8.0-runtime -y
 
-      # Verify that .NET Core 8 is successfully installed
-      Write-Host "Verify that .NET Core 8 is installed..."
+      # Check the installation
+      Write-Host "Verifying that .NET Core 8 is installed..."
       dotnet --version
       dotnet --list-sdks
       dotnet --list-runtimes
-
-      # Recheck .NET Core installation and run
+      
       if (Get-Command "dotnet" -ErrorAction SilentlyContinue) {
+
+        # Installing tool
+        dotnet nuget add source http://192.168.56.1:5000/v3/index.json --name "BaGet"
+        dotnet tool install --global OBashtovyi --version 1.0.0
         
-        # Install OBashtovyi tool
-        Write-Host "Installing tool..."
-        dotnet tool install --global --version 1.0.0 --add-source http://10.0.2.2:5000/v3/index.json --verbosity detailed OBashtovyi
-        
-        # Check the installation
         OBashtovyi version
+
+        cd C:\\project    
+
+        OBashtovyi run lab1 -I Lab4/Lab1/INPUT.TXT -o Lab4/Lab1/OUTPUT.TXT    
+
       } else {
-        Write-Host "can not start project, .NET Core 8 is not installed!"
+        Write-Host ".NET Core 8 installation failed. Manual intervention required."
       }
     SHELL
   end
