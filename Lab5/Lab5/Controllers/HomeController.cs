@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
-using Lab5.Services;
-using Lab5.ViewModels;
+using Lab6.Services;
+using Lab6.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Lab5.Controllers;
+namespace Lab6.Controllers;
 
 public class HomeController : Controller
 {

@@ -6,7 +6,6 @@ using Microsoft.OpenApi.Models;
 using Lab6.Data;
 using System.Text.Json.Serialization;
 using System.Text.Json;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -27,7 +26,6 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API V1", Version = "v1" });
-    c.SwaggerDoc("v2", new OpenApiInfo { Title = "My API V2", Version = "v2" });
     c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 });
 
@@ -61,7 +59,7 @@ builder.Services.AddApiVersioning(options =>
 {
     options.ReportApiVersions = true;
     options.AssumeDefaultVersionWhenUnspecified = true;
-    options.DefaultApiVersion = new ApiVersion(1, 0); // Default to v1
+    options.DefaultApiVersion = new ApiVersion(1, 0);
     options.ApiVersionReader = new UrlSegmentApiVersionReader();
 });
 
@@ -86,9 +84,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowWebApp",
+    options.AddPolicy("AllowSpecificOrigin",
         policy => policy
-            .WithOrigins(builder.Configuration["WebApp:Url"] ?? throw new ArgumentException("Web app url is empty!"))
+            .WithOrigins(builder.Configuration["WebApp:Url"] ?? throw new InvalidOperationException("Web app url is empty!"))
             .AllowAnyMethod()
             .AllowAnyHeader());
 });
@@ -110,7 +108,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowWebApp");
+app.UseCors("AllowSpecificOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

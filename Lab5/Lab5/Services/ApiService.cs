@@ -1,9 +1,9 @@
-﻿using Lab5.DTO;
+﻿using Lab6.DTO;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Lab5.Services;
+namespace Lab6.Services;
 
 public class ApiService
 {
@@ -98,33 +98,16 @@ public class ApiService
 
 
 
-
-
-
-    //public async Task<List<Dive>> GetDivesAsync(DiveRequest request, string apiVersion = "v1")
-    //{
-    //    await SetAuthorizationHeaderAsync();
-
-    //    var response = await _httpClient.GetAsync($"api/{apiVersion}/Dives");
-    //    response.EnsureSuccessStatusCode();
-
-    //    var json = await response.Content.ReadAsStringAsync();
-
-    //    Console.WriteLine($"[GetDives] - Received JSON: {json}");
-
-    //    var dives = JsonSerializer.Deserialize<List<Dive>>(json, _serializationOptions);
-
-    //    return dives ?? new List<Dive>(0);
-    //}
-
-
     public async Task<List<DiveResponse>> GetDivesAsync(DiveRequest request, string apiVersion = "v1")
     {
         await SetAuthorizationHeaderAsync();
 
         var query = $"api/{apiVersion}/dives?" +
-                    $"startDate={request.StartDate}&endDate={request.EndDate}&diverId={request.DiverId}" +
-                    $"&siteNameStart={request.SiteNameStart}&siteNameEnd={request.SiteNameEnd}";
+                    $"startDate={request.StartDate?.ToString("yyyy-MM-ddTHH:mm:ss")}&" +
+                    $"endDate={request.EndDate?.ToString("yyyy-MM-ddTHH:mm:ss")}&" +
+                    $"diverId={request.DiverId}&" +
+                    $"siteNameStart={request.SiteNameStart}&" +
+                    $"siteNameEnd={request.SiteNameEnd}";
 
         var response = await _httpClient.GetAsync(query);
         response.EnsureSuccessStatusCode();

@@ -1,5 +1,5 @@
-﻿using Lab6.Data;
-using Lab6.Models;
+﻿using Lab6.DTO;
+using Lab6.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -20,29 +20,36 @@ public class DiversController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Diver>>> GetDivers()
+    public async Task<IActionResult> GetDivers()
     {
-        return await _context.Divers.ToListAsync();
+        var divers = await _context.Divers.Select(d => new DiverResponse()
+        {
+            DiverId = d.DiverId,
+            DiverName = d.DiverName,
+            DiverDetails = d.DiverDetails,
+        }).ToListAsync();
+
+        return Ok(divers);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<Diver>> GetDiver(Guid id)
+    public async Task<ActionResult<DiverResponse>> GetDiver(Guid id)
     {
-        var diver = await _context.Divers.FindAsync(id);
+        var diver = await _context.Divers
+            .Where(d => d.DiverId == id)
+            .Select(d => new DiverResponse()
+            {
+                DiverId = d.DiverId,
+                DiverName = d.DiverName,
+                DiverDetails = d.DiverDetails,
+            })
+            .FirstOrDefaultAsync();
 
         if (diver == null)
         {
             return NotFound();
         }
 
-        return diver;
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<Diver>> CreateDiver(Diver diver)
-    {
-        _context.Divers.Add(diver);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetDiver), new { id = diver.DiverId }, diver);
+        return Ok(diver);
     }
 }

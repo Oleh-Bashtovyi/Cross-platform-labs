@@ -12,6 +12,6 @@ public class DiverCertification
     public string InstructorName { get; set; }
     public string InstructionLocation { get; set; }
 
-    public Diver Diver { get; set; }
-    public LevelOfCertification Certification { get; set; }
+    public Diver? Diver { get; set; }
+    public LevelOfCertification? Certification { get; set; }
 }

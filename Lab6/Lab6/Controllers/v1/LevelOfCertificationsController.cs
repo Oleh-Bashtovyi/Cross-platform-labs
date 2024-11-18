@@ -19,13 +19,15 @@ public class LevelOfCertificationsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<LevelOfCertification>>> GetCertifications()
+    public async Task<IActionResult> GetCertifications()
     {
-        return await _context.LevelsOfCertification.ToListAsync();
+        var certifications = await _context.LevelsOfCertification.ToListAsync();
+
+        return Ok(certifications);
     }
 
     [HttpGet("{code}")]
-    public async Task<ActionResult<LevelOfCertification>> GetCertification(string code)
+    public async Task<IActionResult> GetCertification(string code)
     {
         var cert = await _context.LevelsOfCertification.FindAsync(code);
 
@@ -34,14 +36,6 @@ public class LevelOfCertificationsController : ControllerBase
             return NotFound();
         }
 
-        return cert;
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<LevelOfCertification>> CreateCertification(LevelOfCertification cert)
-    {
-        _context.LevelsOfCertification.Add(cert);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetCertification), new { code = cert.CertificationCode }, cert);
+        return Ok(cert);
     }
 }

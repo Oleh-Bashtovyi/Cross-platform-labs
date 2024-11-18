@@ -1,8 +1,8 @@
-﻿using Lab5.DTO;
-using Lab5.Services;
+﻿using Lab6.DTO;
+using Lab6.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Lab5.Controllers;
+namespace Lab6.Controllers;
 
 [Controller]
 public class DivesController : Controller
@@ -19,8 +19,8 @@ public class DivesController : Controller
     {
         var divers = await _apiService.GetDivesAsync(diveRequest, apiVersion: "v1");
 
-        ViewData["StartDate"] = diveRequest.StartDate;
-        ViewData["EndDate"] = diveRequest.EndDate;
+        ViewData["StartDate"] = diveRequest.StartDate?.ToString("yyyy-MM-dd");
+        ViewData["EndDate"] = diveRequest.EndDate?.ToString("yyyy-MM-dd");
         ViewData["DiverId"] = diveRequest.DiverId;
         ViewData["SiteNameStart"] = diveRequest.SiteNameStart;
         ViewData["SiteNameEnd"] = diveRequest.SiteNameEnd;
@@ -28,7 +28,7 @@ public class DivesController : Controller
         return View(divers);
     }
 
-
+     
 
     [Route("/dives/{id:guid}")]
     public async Task<IActionResult> Details(Guid id)

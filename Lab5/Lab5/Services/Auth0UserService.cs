@@ -3,9 +3,9 @@ using Auth0.ManagementApi.Models;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
 
-using Lab5.ViewModels;
+using Lab6.ViewModels;
 
-namespace Lab5.Services;
+namespace Lab6.Services;
 
 public class Auth0UserService
 {

@@ -1,8 +1,8 @@
-﻿using Lab5.ViewModels;
+﻿using Lab6.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace Lab5.Controllers;
+namespace Lab6.Controllers;
 
 public class LabsController : Controller
 {

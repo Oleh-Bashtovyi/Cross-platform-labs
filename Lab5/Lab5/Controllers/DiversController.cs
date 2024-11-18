@@ -1,8 +1,8 @@
-﻿using Lab5.DTO;
-using Lab5.Services;
+﻿using Lab6.DTO;
+using Lab6.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Lab5.Controllers;
+namespace Lab6.Controllers;
 
 [Controller]
 public class DiversController : Controller

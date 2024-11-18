@@ -19,13 +19,15 @@ namespace Lab6.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Wreck>>> GetWrecks()
+        public async Task<IActionResult> GetWrecks()
         {
-            return await _context.Wrecks.ToListAsync();
+            var wrecks = await _context.Wrecks.ToListAsync();
+
+            return Ok(wrecks);
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Wreck>> GetWreck(Guid id)
+        public async Task<IActionResult> GetWreck(Guid id)
         {
             var wreck = await _context.Wrecks.FindAsync(id);
 
@@ -33,15 +35,7 @@ namespace Lab6.Controllers.v1
             {
                 return NotFound();
             }
-            return wreck;
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Wreck>> CreateWreck(Wreck wreck)
-        {
-            _context.Wrecks.Add(wreck);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetWreck), new { id = wreck.DiveSiteId }, wreck);
+            return Ok(wreck);
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace Lab5.DTO;
+﻿namespace Lab6.DTO;
 
 public class DiveOrganisationResponse
 {

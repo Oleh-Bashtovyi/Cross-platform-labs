@@ -1,7 +1,7 @@
-﻿using Lab5.Services;
+﻿using Lab6.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Lab5.Controllers;
+namespace Lab6.Controllers;
 
 [Controller]
 public class DiveSitesController : Controller

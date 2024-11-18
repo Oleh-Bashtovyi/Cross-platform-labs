@@ -1,5 +1,5 @@
-﻿using Lab6.Data;
-using Lab6.Models;
+﻿using Lab6.DTO;
+using Lab6.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -19,29 +19,42 @@ public class DiveSitesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<DiveSite>>> GetDiveSites()
+    public async Task<IActionResult> GetDiveSites()
     {
-        return await _context.DiveSites.ToListAsync();
+        var diveSites = await _context.DiveSites
+            .Select(ds => new DiveSiteResponse()
+            {
+                DiveSiteId = ds.DiveSiteId,
+                DiveSiteCode = ds.DiveSiteCode,
+                DiveSiteDescription = ds.DiveSiteDescription,
+                DiveSiteName = ds.DiveSiteName,
+                OtherDetails = ds.OtherDetails
+            })
+            .ToListAsync();
+
+        return Ok(diveSites);
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<DiveSite>> GetDiveSite(Guid id)
+    public async Task<IActionResult> GetDiveSite(Guid id)
     {
-        var site = await _context.DiveSites.FindAsync(id);
+        var site = await _context.DiveSites
+            .Where(ds => ds.DiveSiteId == id)
+            .Select(ds => new DiveSiteResponse()
+            {
+                DiveSiteId = ds.DiveSiteId,
+                DiveSiteCode = ds.DiveSiteCode,
+                DiveSiteDescription = ds.DiveSiteDescription,
+                DiveSiteName = ds.DiveSiteName,
+                OtherDetails = ds.OtherDetails
+            })
+            .FirstOrDefaultAsync();
 
         if (site == null)
         {
             return NotFound();
         }
 
-        return site;
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<DiveSite>> CreateDiveSite(DiveSite site)
-    {
-        _context.DiveSites.Add(site);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetDiveSite), new { id = site.DiveSiteId }, site);
+        return Ok(site);
     }
 }

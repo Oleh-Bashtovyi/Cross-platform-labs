@@ -10,6 +10,6 @@ public class Diver
     public string DiverName { get; set; }
     public string DiverDetails { get; set; }
 
-    public ICollection<DiverCertification> Certifications { get; set; }
-    public ICollection<Dive> Dives { get; set; }
+    public ICollection<DiverCertification>? Certifications { get; set; }
+    public ICollection<Dive>? Dives { get; set; }
 }

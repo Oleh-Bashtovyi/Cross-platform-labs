@@ -1,11 +1,11 @@
 ﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Lab5.ViewModels;
+using Lab6.ViewModels;
 using System.Security.Claims;
-using Lab5.Services;
+using Lab6.Services;
 
-namespace Lab5.Controllers;
+namespace Lab6.Controllers;
 
 public class AccountController(Auth0UserService auth0UserService) : Controller
 {
