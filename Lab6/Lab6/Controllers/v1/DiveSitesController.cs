@@ -3,6 +3,7 @@ using Lab6.Data;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Lab6.Models;
 
 namespace Lab6.Controllers.v1;
 
@@ -19,7 +20,7 @@ public class DiveSitesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetDiveSites()
+    public async Task<ActionResult<IEnumerable<DiveSiteResponse>>> GetDiveSites()
     {
         var diveSites = await _context.DiveSites
             .Select(ds => new DiveSiteResponse()
@@ -32,11 +33,11 @@ public class DiveSitesController : ControllerBase
             })
             .ToListAsync();
 
-        return Ok(diveSites);
+        return diveSites;
     }
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetDiveSite(Guid id)
+    public async Task<ActionResult<DiveSiteResponse>> GetDiveSite(Guid id)
     {
         var site = await _context.DiveSites
             .Where(ds => ds.DiveSiteId == id)
@@ -55,6 +56,6 @@ public class DiveSitesController : ControllerBase
             return NotFound();
         }
 
-        return Ok(site);
+        return site;
     }
 }

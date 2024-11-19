@@ -19,15 +19,15 @@ public class DiverCertificationsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetDiverCertifications()
+    public async Task<ActionResult<IEnumerable<DiverCertification>>> GetDiverCertifications()
     {
         var diverCertifications = await _context.DiverCertifications.ToListAsync();
 
-        return Ok(diverCertifications);
+        return diverCertifications;
     }
 
     [HttpGet("{diverId}/{certificationCode}")]
-    public async Task<IActionResult> GetDiverCertification(Guid diverId, string certificationCode)
+    public async Task<ActionResult<DiverCertification>> GetDiverCertification(Guid diverId, string certificationCode)
     {
         var cert = await _context.DiverCertifications.FindAsync(diverId, certificationCode);
 
@@ -35,6 +35,6 @@ public class DiverCertificationsController : ControllerBase
         {
             return NotFound();
         }
-        return Ok(cert);
+        return cert;
     }
 }

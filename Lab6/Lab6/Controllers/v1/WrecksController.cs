@@ -19,15 +19,15 @@ namespace Lab6.Controllers.v1
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetWrecks()
+        public async Task<ActionResult<IEnumerable<Wreck>>> GetWrecks()
         {
             var wrecks = await _context.Wrecks.ToListAsync();
 
-            return Ok(wrecks);
+            return wrecks;
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetWreck(Guid id)
+        public async Task<ActionResult<Wreck>> GetWreck(Guid id)
         {
             var wreck = await _context.Wrecks.FindAsync(id);
 
@@ -35,7 +35,7 @@ namespace Lab6.Controllers.v1
             {
                 return NotFound();
             }
-            return Ok(wreck);
+            return wreck;
         }
     }
 }

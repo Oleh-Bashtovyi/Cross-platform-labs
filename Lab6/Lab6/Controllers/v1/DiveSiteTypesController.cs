@@ -19,20 +19,20 @@ public class DiveSiteTypesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetDiveSiteTypes()
+    public async Task<ActionResult<IEnumerable<DiveSiteType>>> GetDiveSiteTypes()
     {
         var diveSitesTypes = await _context.DiveSiteTypes.ToListAsync();
 
-        return Ok(diveSitesTypes);
+        return diveSitesTypes;
     }
 
     [HttpGet("{code}")]
-    public async Task<IActionResult> GetDiveSiteType(string code)
+    public async Task<ActionResult<DiveSiteType>> GetDiveSiteType(string code)
     {
         var type = await _context.DiveSiteTypes.FindAsync(code);
         if (type == null)
             return NotFound();
 
-        return Ok(type);
+        return type;
     }
 }

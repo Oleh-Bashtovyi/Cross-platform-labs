@@ -58,21 +58,24 @@ public class AccountController(Auth0UserService auth0UserService) : Controller
 
         try
         {
-            UserProfileViewModel userProfile = await _auth0UserService.GetUser(model);
+            var token = await _auth0UserService.AuthenticateUserAsync(model);
+
+            UserProfileViewModel userProfile = await _auth0UserService.GetUserInfo(token);
             List<Claim> claims =
             [
-                new Claim(ClaimTypes.NameIdentifier, userProfile.Email),
+                    new Claim(ClaimTypes.NameIdentifier, userProfile.Email),
                     new Claim(ClaimTypes.Name, userProfile.FullName),
                     new Claim(ClaimTypes.Email, userProfile.Email),
                     new Claim("ProfileImage", userProfile.ProfileImage),
                     new Claim(ClaimTypes.MobilePhone, userProfile.PhoneNumber),
-                    new Claim("Username", userProfile.Username)
+                    new Claim("Username", userProfile.Username),
             ];
 
-            ClaimsIdentity claimsIdentity = new(claims, "AuthScheme");
-            ClaimsPrincipal claimsPrincipal = new(claimsIdentity);
-
+            var claimsIdentity = new ClaimsIdentity(claims, "AuthScheme");
+            var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
             await HttpContext.SignInAsync("AuthScheme", claimsPrincipal);
+
+            StoreToken(token);
 
             return RedirectToAction("Profile", "Account");
         }
@@ -102,12 +105,28 @@ public class AccountController(Auth0UserService auth0UserService) : Controller
         return View(profileViewModel);
     }
 
+
+    private void StoreToken(string token)
+    {
+        var cookieOptions = new CookieOptions
+        {
+            HttpOnly = true,
+            Secure = true,
+            SameSite = SameSiteMode.Strict,
+            Expires = DateTime.UtcNow.AddHours(1)
+        };
+
+        Response.Cookies.Append("AccessToken", token, cookieOptions);
+    }
+
+
     [HttpPost]
     [Authorize]
     [Route("/account/logout")]
     public async Task<IActionResult> Logout()
     {
         await HttpContext.SignOutAsync();
+        Response.Cookies.Delete("AccessToken");
         return RedirectToAction("Index", "Home");
     }
 }

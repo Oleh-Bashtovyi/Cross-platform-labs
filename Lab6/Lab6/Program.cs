@@ -21,14 +21,12 @@ builder.Services.AddControllers(options =>
     options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
 });
 
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API V1", Version = "v1" });
     c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 });
-
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
 {
@@ -64,14 +62,11 @@ builder.Services.AddApiVersioning(options =>
 });
 
 
-
-// Налаштування автентифікації Auth0
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
         options.Authority = $"https://{builder.Configuration["Auth0:Domain"]}";
         options.Audience = builder.Configuration["Auth0:Audience"];
-
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,

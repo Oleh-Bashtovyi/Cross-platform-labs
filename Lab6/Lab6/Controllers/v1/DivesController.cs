@@ -20,7 +20,7 @@ public class DivesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetDives([FromQuery] DiveRequest request)
+    public async Task<ActionResult<IEnumerable<DiveResponse>>> GetDives([FromQuery] DiveRequest request)
     {
         var query = _context.Dives
             .Include(d => d.Diver)
@@ -75,13 +75,13 @@ public class DivesController : ControllerBase
         .OrderBy(d => d.DiverId)
         .ToListAsync();
 
-        return Ok(dives);
+        return dives;
     }
 
-
+    
 
     [HttpGet("{id}")]
-    public async Task<IActionResult> GetDive(Guid id)
+    public async Task<ActionResult<DiveResponse>> GetDive(Guid id)
     {
         var dive = await _context.Dives
             .Include(d => d.Diver)
@@ -109,6 +109,6 @@ public class DivesController : ControllerBase
         var ukraineTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Kiev");
         dive.DiveDate = TimeZoneInfo.ConvertTimeFromUtc(dive.DiveDate, ukraineTimeZone);
 
-        return Ok(dive);
+        return dive;
     }
 }

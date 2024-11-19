@@ -29,7 +29,6 @@ public class DivesController : Controller
     }
 
      
-
     [Route("/dives/{id:guid}")]
     public async Task<IActionResult> Details(Guid id)
     {

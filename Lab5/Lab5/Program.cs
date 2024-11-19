@@ -1,11 +1,10 @@
 using Lab6.Services;
-using Microsoft.Extensions.Configuration;
-using System.Net.Http.Headers;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<Auth0UserService>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient<ApiService>(client =>
 {
     var apiAppUrl = builder.Environment.IsDevelopment() ? 

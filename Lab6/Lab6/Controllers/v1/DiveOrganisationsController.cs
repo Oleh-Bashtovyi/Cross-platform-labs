@@ -28,7 +28,7 @@ public class DiveOrganisationsController : ControllerBase
     }
 
     [HttpGet("{code}")]
-    public async Task<IActionResult> GetDiveOrganisation(string code)
+    public async Task<ActionResult<DiveOrganisation>> GetDiveOrganisation(string code)
     {
         var org = await _context.DiveOrganisations.Where(o => o.OrganisationCode == code).FirstOrDefaultAsync();
 
@@ -36,6 +36,6 @@ public class DiveOrganisationsController : ControllerBase
         {
             return NotFound();
         }
-        return Ok(org);
+        return org;
     }
 }

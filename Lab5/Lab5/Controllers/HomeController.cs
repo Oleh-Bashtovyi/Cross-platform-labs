@@ -16,8 +16,6 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-
-
     [Route("/")]
     public IActionResult Index()
     {
@@ -25,10 +23,8 @@ public class HomeController : Controller
     }
 
     [Route("/privacy")]
-    public async Task<IActionResult> Privacy()
+    public IActionResult Privacy()
     {
-        var data = await _service.GetDiversAsync();
-
         return View();
     }
 
