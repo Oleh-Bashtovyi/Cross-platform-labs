@@ -1,9 +1,11 @@
 ﻿using Lab6.DTO;
 using Lab6.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Lab6.Controllers;
 
+[Authorize]
 [Controller]
 public class DiversController : Controller
 {
@@ -17,9 +19,18 @@ public class DiversController : Controller
     [Route("/divers")]
     public async Task<IActionResult> Index()
     {
-        var divers = await _apiService.GetDiversAsync();
+        try
+        {
+            var token = Request.Cookies["AccessToken"] ?? "";
 
-        return View(divers);
+            var divers = await _apiService.GetData<List<DiverResponse>>(token, "v1/divers");
+
+            return View(divers);
+        }
+        catch
+        {
+            return RedirectToAction("Login", "Account");
+        }
     }
 
 
@@ -27,13 +38,22 @@ public class DiversController : Controller
     [Route("/divers/{id:guid}")]
     public async Task<IActionResult> Details(Guid id)
     {
-        var diver = await _apiService.GetDiverAsync(id);
-
-        if (diver == null)
+        try
         {
-            return NotFound();
-        }
+            var token = Request.Cookies["AccessToken"] ?? "";
 
-        return View(diver);
+            var diver = await _apiService.GetData<DiverResponse>(token, $"v1/divers/{id}");
+
+            if (diver == null)
+            {
+                return NotFound();
+            }
+
+            return View(diver);
+        }
+        catch
+        {
+            return RedirectToAction("Login", "Account");
+        }
     }
 }

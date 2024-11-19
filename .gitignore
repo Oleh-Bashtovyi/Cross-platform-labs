@@ -8,7 +8,10 @@
 .vagrant/
 .vagrant
 Lab4/nupkg/
-#**/Migrations/
+**/Migrations/
+**/Lab6_VAR44_Database.db/
+**/Lab6_VAR44_Database.db-shm/
+**/Lab6_VAR44_Database.db-wal/
 lab_1_tasks.docx
 lab_2_tasks.docx
 lab_3_tasks.docx
@@ -733,3 +736,7 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,csharp,aspnetcore
 /Lab_1/Lab_1/output.txt
+/Lab6/Lab6/Lab6_VAR44_Database.db
+/Lab6/Lab6/Lab6_VAR44_Database.db-shm
+/Lab6/Lab6/Lab6_VAR44_Database.db-wal
+/Lab6/Lab6/Lab6_VAR44_Database.db

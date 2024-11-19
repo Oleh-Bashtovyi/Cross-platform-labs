@@ -10,7 +10,7 @@ namespace Lab6.Controllers.v1;
 [Authorize]
 [ApiController]
 [ApiVersion("1.0")]
-[Route("api/v{version:apiVersion}/[controller]")]
+[Route("api/v{version:apiVersion}/dive-sites")]
 public class DiveSitesController : ControllerBase
 {
     private readonly ApplicationDbContext _context;

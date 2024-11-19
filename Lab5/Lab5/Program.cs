@@ -7,12 +7,12 @@ builder.Services.AddScoped<Auth0UserService>();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient<ApiService>(client =>
 {
-    var apiAppUrl = builder.Environment.IsDevelopment() ? 
-                builder.Configuration["ApiApp:BaseUrl"] : 
-                builder.Configuration["ApiApp:SecureUrl"];
+    var apiAppUrl = builder.Configuration["ApiApp:BaseUrl"];
 
     if (apiAppUrl == null)
-        throw new InvalidOperationException("Api app url must not be empty!");
+    {
+        throw new InvalidOperationException("Api web app url must not be empty!");
+    }
 
     client.BaseAddress = new Uri(apiAppUrl);
 });
