@@ -1,4 +1,4 @@
-﻿namespace Lab5.DTO;
+﻿namespace Lab6.DTO;
 
 public class DiveResponse
 {
@@ -8,6 +8,8 @@ public class DiveResponse
     public DateTime DiveDate { get; set; }
     public bool NightDiveYn { get; set; }
     public string OtherDetails { get; set; }
+
+    //From join
     public string DiverName { get; set; }
     public string DiveSiteName { get; set; }
 }

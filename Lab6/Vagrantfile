@@ -66,15 +66,12 @@ Vagrant.configure("2") do |config|
       cd /home/vagrant/project/Lab6/Lab6
       
       # Run migrations
+      dotnet ef migrations add Initial
       dotnet ef database update
-
-      dotnet dev-certs https --clean
-      dotnet dev-certs https --trust
-
       
       # Run the project
       echo "Trying to launch project..."
-      dotnet run --urls "https://localhost:7142"
+      dotnet run --urls "http://localhost:5203"
     SHELL
   end
 end

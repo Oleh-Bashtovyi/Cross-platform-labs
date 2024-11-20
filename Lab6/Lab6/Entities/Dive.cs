@@ -19,6 +19,6 @@ public class Dive
     public bool NightDiveYn { get; set; }
     public string OtherDetails { get; set; }
 
-    public Diver Diver { get; set; }
-    public DiveSite DiveSite { get; set; }
+    public Diver? Diver { get; set; }
+    public DiveSite? DiveSite { get; set; }
 }

@@ -1,5 +1,4 @@
-﻿using Azure.Core;
-using Lab6.Data;
+﻿using Lab6.Data;
 using Lab6.DTO;
 using Lab6.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -21,64 +20,84 @@ public class DivesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Dive>>> GetDives([FromQuery] DiveRequest request)
+    public async Task<ActionResult<IEnumerable<DiveResponse>>> GetDives([FromQuery] DiveRequest request)
     {
-        var query = FilterDives(_context.Dives.AsQueryable(), request);
+        var query = _context.Dives
+            .Include(d => d.Diver)
+            .Include(d => d.DiveSite)
+            .AsQueryable();
 
-        var result = await query.Select(d => new
-        {
-            d.DiveId,
-            d.DiveDate,
-            d.NightDiveYn,
-            d.OtherDetails,
-            d.DiverId,
-            d.DiveSiteId,
-            //Join
-            d.Diver.DiverName,
-            d.DiveSite.DiveSiteName
-        }).ToListAsync();
-
-        return Ok(result);
-    }
-
-
-    private IQueryable<Dive> FilterDives(IQueryable<Dive> query, DiveRequest request)
-    {
         if (request.StartDate.HasValue)
-            query = query.Where(d => d.DiveDate >= request.StartDate);
+        {
+            var fromDate = DateTime.SpecifyKind(request.StartDate.Value, DateTimeKind.Utc);
+            var startOfDay = fromDate.Date;
+            query = query.Where(d => d.DiveDate >= startOfDay);
+        }
 
         if (request.EndDate.HasValue)
-            query = query.Where(d => d.DiveDate <= request.EndDate);
+        {
+            var toDate = DateTime.SpecifyKind(request.EndDate.Value, DateTimeKind.Utc);
+            var endOfDay = toDate.Date.AddDays(1).AddMilliseconds(-1);
+            query = query.Where(d => d.DiveDate <= endOfDay);
+        }
 
-        if (!string.IsNullOrEmpty(request.DiverId))
-            query = query.Where(d => d.DiverId.ToString().StartsWith(request.DiverId));
+        if (request.DiverId.HasValue)
+        {
+            query = query.Where(d => d.DiverId == request.DiverId);
+        }
 
         if (!string.IsNullOrEmpty(request.SiteNameStart))
-            query = query.Where(d => d.DiveSite.DiveSiteName.ToLower().StartsWith(request.SiteNameStart.ToLower()));
+        {
+            var siteNameStart = request.SiteNameStart.ToLower();
+            query = query.Where(d => d.DiveSite.DiveSiteName.ToLower().StartsWith(siteNameStart));
+        }
 
         if (!string.IsNullOrEmpty(request.SiteNameEnd))
-            query = query.Where(d => d.DiveSite.DiveSiteName.ToLower().EndsWith(request.SiteNameEnd.ToLower()));
+        {
+            var siteNameEnd = request.SiteNameEnd.ToLower();
+            query = query.Where(d => d.DiveSite.DiveSiteName.ToLower().EndsWith(siteNameEnd));
+        }
 
-        return query;
+        var ukraineTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Kiev");
+
+        var dives = await query.Select(d => new DiveResponse()
+        {
+            DiveId = d.DiveId,
+            DiveDate = TimeZoneInfo.ConvertTimeFromUtc(d.DiveDate, ukraineTimeZone),
+            NightDiveYn = d.NightDiveYn,
+            OtherDetails = d.OtherDetails,
+            DiverId = d.DiverId,
+            DiveSiteId = d.DiveSiteId,
+            //Join
+            DiverName = d.Diver.DiverName,
+            DiveSiteName = d.DiveSite.DiveSiteName,
+        })
+        .OrderBy(d => d.DiverId)
+        .ToListAsync();
+
+        return dives;
     }
 
+    
 
     [HttpGet("{id}")]
-    public async Task<ActionResult> GetDive(Guid id)
+    public async Task<ActionResult<DiveResponse>> GetDive(Guid id)
     {
         var dive = await _context.Dives
+            .Include(d => d.Diver)
+            .Include(d => d.DiveSite)
             .Where(d => d.DiveId == id)
-            .Select(d => new
+            .Select(d => new DiveResponse()
             {
-                d.DiveId,
-                d.DiveDate,
-                d.NightDiveYn,
-                d.OtherDetails,
-                d.DiverId,
-                d.DiveSiteId,
+                DiveId = d.DiveId,
+                DiveDate = d.DiveDate,
+                NightDiveYn = d.NightDiveYn,
+                OtherDetails = d.OtherDetails,
+                DiverId = d.DiverId,
+                DiveSiteId = d.DiveSiteId,
                 //Join
-                d.Diver.DiverName,
-                d.DiveSite.DiveSiteName
+                DiverName = d.Diver.DiverName,
+                DiveSiteName = d.DiveSite.DiveSiteName,
             })
             .FirstOrDefaultAsync();
 
@@ -87,15 +106,9 @@ public class DivesController : ControllerBase
             return NotFound();
         }
 
-        return Ok(dive);
-    }
+        var ukraineTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Europe/Kiev");
+        dive.DiveDate = TimeZoneInfo.ConvertTimeFromUtc(dive.DiveDate, ukraineTimeZone);
 
-
-    [HttpPost]
-    public async Task<ActionResult<Dive>> CreateDive(Dive dive)
-    {
-        _context.Dives.Add(dive);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetDive), new { id = dive.DiveId }, dive);
+        return dive;
     }
 }

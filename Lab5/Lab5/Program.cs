@@ -1,19 +1,18 @@
-using Lab5.Services;
-using Microsoft.Extensions.Configuration;
-using System.Net.Http.Headers;
+using Lab6.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<Auth0UserService>();
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddHttpClient<ApiService>(client =>
 {
-    var apiAppUrl = builder.Environment.IsDevelopment() ? 
-                builder.Configuration["ApiApp:BaseUrl"] : 
-                builder.Configuration["ApiApp:SecureUrl"];
+    var apiAppUrl = builder.Configuration["ApiApp:BaseUrl"];
 
     if (apiAppUrl == null)
-        throw new InvalidOperationException("Api app url must not be empty!");
+    {
+        throw new InvalidOperationException("Api web app url must not be empty!");
+    }
 
     client.BaseAddress = new Uri(apiAppUrl);
 });

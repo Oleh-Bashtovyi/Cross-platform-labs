@@ -1,9 +1,9 @@
 ﻿using System.Diagnostics;
-using Lab5.Services;
-using Lab5.ViewModels;
+using Lab6.Services;
+using Lab6.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Lab5.Controllers;
+namespace Lab6.Controllers;
 
 public class HomeController : Controller
 {
@@ -16,8 +16,6 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-
-
     [Route("/")]
     public IActionResult Index()
     {
@@ -25,10 +23,8 @@ public class HomeController : Controller
     }
 
     [Route("/privacy")]
-    public async Task<IActionResult> Privacy()
+    public IActionResult Privacy()
     {
-        var data = await _service.GetDiversAsync();
-
         return View();
     }
 

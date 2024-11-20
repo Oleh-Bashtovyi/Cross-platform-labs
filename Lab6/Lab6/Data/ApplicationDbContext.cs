@@ -77,7 +77,6 @@ namespace Lab6.Data
         {
             if (Divers.Any() || DiveSiteTypes.Any() || DiveSites.Any() || Dives.Any()) return;
 
-            // Додавання записів для Diver
             var divers = new List<Diver>
             {
                 new Diver
@@ -113,7 +112,6 @@ namespace Lab6.Data
             };
             Divers.AddRange(divers);
 
-            // Додавання записів для DiveSiteType
             var diveSiteTypes = new List<DiveSiteType>
             {
                 new DiveSiteType
@@ -144,7 +142,6 @@ namespace Lab6.Data
             };
             DiveSiteTypes.AddRange(diveSiteTypes);
 
-            // Додавання записів для DiveSite з посиланням на DiveSiteType
             var diveSites = new List<DiveSite>
             {
                 new DiveSite
@@ -190,7 +187,6 @@ namespace Lab6.Data
             };
             DiveSites.AddRange(diveSites);
 
-            // Додавання записів для Dive з посиланнями на Diver та DiveSite
             var dives = new List<Dive>
             {
                 new Dive

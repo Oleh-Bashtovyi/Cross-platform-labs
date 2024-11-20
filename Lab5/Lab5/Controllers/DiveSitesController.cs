@@ -1,9 +1,12 @@
-﻿using Lab5.Services;
+﻿using Lab6.DTO;
+using Lab6.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Lab5.Controllers;
+namespace Lab6.Controllers;
 
 [Controller]
+[Authorize]
 public class DiveSitesController : Controller
 {
     private readonly ApiService _apiService;
@@ -16,22 +19,40 @@ public class DiveSitesController : Controller
     [Route("/dive-sites")]
     public async Task<IActionResult> Index()
     {
-        var divers = await _apiService.GetDiveSitesAsync();
+        try
+        {
+            var token = Request.Cookies["AccessToken"] ?? "";
 
-        return View(divers);
+            var diveSites = await _apiService.GetData<List<DiveSiteResponse>>(token, "v1/dive-sites");
+
+            return View(diveSites);
+        }
+        catch
+        {
+            return RedirectToAction("Login", "Account");
+        }
     }
 
 
     [Route("/dive-sites/{id:guid}")]
     public async Task<IActionResult> Details(Guid id)
     {
-        var diver = await _apiService.GetDiveSiteAsync(id);
-
-        if (diver == null)
+        try
         {
-            return NotFound();
-        }
+            var token = Request.Cookies["AccessToken"] ?? "";
 
-        return View(diver);
+            var diveSite = await _apiService.GetData<DiveSiteResponse>(token, $"v1/dive-sites/{id}");
+
+            if (diveSite == null)
+            {
+                return NotFound();
+            }
+
+            return View(diveSite);
+        }
+        catch
+        {
+            return RedirectToAction("Login", "Account");
+        }
     }
 }

@@ -11,5 +11,5 @@ public class Wreck
     public DateTime WreckDate { get; set; }
     public string WreckDetails { get; set; }
 
-    public DiveSite DiveSite { get; set; }
+    public DiveSite? DiveSite { get; set; }
 }

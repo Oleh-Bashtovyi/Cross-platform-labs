@@ -1,10 +1,5 @@
 ﻿using LabLibrary;
 using McMaster.Extensions.CommandLineUtils;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Lab4.Commands;
 
@@ -24,16 +19,13 @@ class RunCommand
 
     const string DEFAULT_INPUT_FILE = "INPUT.TXT";
     const string DEFAULT_OUTPUT_FILE = "OUTPUT.TXT";
-    const string ENVIRONMENT_LAB_PATH = "LAB_PATH";
 
 
     private void OnExecute(CommandLineApplication app, IConsole console)
     {
-        //var envLabPath = Environment.GetEnvironmentVariable(ENVIRONMENT_LAB_PATH, EnvironmentVariableTarget.Machine);
-        var envLabPath = Environment.GetEnvironmentVariable(ENVIRONMENT_LAB_PATH);
+        var envLabPath = Environment.GetEnvironmentVariable("LAB_PATH");
 
         Console.WriteLine($"Running Lab: {Lab}");
-        //Console.WriteLine($"Running {Lab} with input: {InputFile}, output: {OutputFile}, LAB_PATH: {envLabPath}");
 
         if (string.IsNullOrEmpty(Lab))
         {
@@ -48,39 +40,7 @@ class RunCommand
         string outputPath = OutputFile ?? Path.Combine(envLabPath ?? homeDirectory, DEFAULT_OUTPUT_FILE);
 
 
-
-        //if (string.IsNullOrEmpty(Lab))
-        //{
-        //    console.WriteLine("Error: No lab specified.");
-        //    app.ShowHelp();
-        //    return;
-        //}
-
-        //var labPath = GetLabDirectory(Lab);
-
-        //if (labPath == null)
-        //{
-        //    Console.WriteLine($"Unknown lab '{Lab}'. Available labs: lab1, lab2, lab3");
-        //    return;
-        //}
-
-        //string inputPath;
-
-        //// Assign the input file path with a priority to InputFile
-        //if (string.IsNullOrEmpty(InputFile))
-        //{
-        //    inputPath = Environment.GetEnvironmentVariable("LAB_PATH") ??
-        //                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "INPUT.txt");
-
-        //}
-        //else
-        //{
-        //    inputPath = InputFile;
-        //}
-
-        //var outputPath = !string.IsNullOrEmpty(OutputFile) ? OutputFile : Path.Combine(labPath, "OUTPUT.txt");
-
-        Console.WriteLine($"Environment variable {ENVIRONMENT_LAB_PATH}: {envLabPath}");
+        Console.WriteLine($"Environment variable LAB_PATH: {envLabPath}");
         Console.WriteLine($"INPUT: '{inputPath}'");
         Console.WriteLine($"OUTPUT: '{outputPath}'");
 

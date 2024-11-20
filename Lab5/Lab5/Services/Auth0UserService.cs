@@ -3,9 +3,9 @@ using Auth0.ManagementApi.Models;
 using Auth0.AuthenticationApi;
 using Auth0.AuthenticationApi.Models;
 
-using Lab5.ViewModels;
+using Lab6.ViewModels;
 
-namespace Lab5.Services;
+namespace Lab6.Services;
 
 public class Auth0UserService
 {
@@ -26,18 +26,11 @@ public class Auth0UserService
 
     public async Task CreateUserAsync(UserRegisterViewModel model)
     {
+        var managmentToken = await GetManagmentApiTokenAsync();
 
-        AuthenticationApiClient tokenClient = new(new Uri($"https://{_domain}"));
-        AccessTokenResponse tokenResponse = await tokenClient.GetTokenAsync(new ClientCredentialsTokenRequest
-        {
-            ClientId = _clientId,
-            ClientSecret = _clientSecret,
-            Audience = _audience
-        });
-
-        ManagementApiClient managementClient = new(tokenResponse.AccessToken, new Uri($"https://{_domain}/api/v2"));
-
-        UserCreateRequest userCreateRequest = new()
+        // Create user using managment api token
+        var managementClient = new ManagementApiClient(managmentToken, new Uri($"https://{_domain}/api/v2"));
+        var userCreateRequest = new UserCreateRequest()
         {
             Email = model.Email,
             EmailVerified = false,
@@ -50,15 +43,15 @@ public class Auth0UserService
                 model.Username,
             }
         };
-
-        await managementClient.Users.CreateAsync(userCreateRequest);
+        var user = await managementClient.Users.CreateAsync(userCreateRequest);
     }
 
-    public async Task<UserProfileViewModel> GetUser(UserLoginViewModel model)
+
+    public async Task<string> AuthenticateUserAsync(UserLoginViewModel model)
     {
-        string alternativeValue = "N/A";
-        AuthenticationApiClient authClient = new(new Uri($"https://{_domain}"));
-        AccessTokenResponse authResponse = await authClient.GetTokenAsync(new ResourceOwnerTokenRequest
+        // Get user access token using email and password
+        var authClient = new AuthenticationApiClient(new Uri($"https://{_domain}"));
+        var authResponse = await authClient.GetTokenAsync(new ResourceOwnerTokenRequest
         {
             Audience = _audience,
             ClientId = _clientId,
@@ -69,11 +62,19 @@ public class Auth0UserService
             Scope = "openid profile email"
         });
 
-        ManagementApiClient managementClient = new(authResponse.AccessToken, new Uri($"https://{_domain}/api/v2"));
+        return authResponse.AccessToken;
+    }
 
-        UserInfo userInfo = await authClient.GetUserInfoAsync(authResponse.AccessToken);
-        User user = await managementClient.Users.GetAsync(userInfo.UserId);
 
+    public async Task<UserProfileViewModel> GetUserInfo(string token)
+    {
+        // Get user info using his\her access token
+        var authClient = new AuthenticationApiClient(new Uri($"https://{_domain}"));
+        var managementClient = new ManagementApiClient(token, new Uri($"https://{_domain}/api/v2"));
+        var userInfo = await authClient.GetUserInfoAsync(token);
+        var user = await managementClient.Users.GetAsync(userInfo.UserId);
+
+        var alternativeValue = "N/A";
 
         return new UserProfileViewModel
         {
@@ -86,10 +87,7 @@ public class Auth0UserService
     }
 
 
-
-
-
-    public async Task<string> GetAccessTokenAsync()
+    public async Task<string> GetManagmentApiTokenAsync()
     {
         var authClient = new AuthenticationApiClient(new Uri($"https://{_domain}"));
         var tokenResponse = await authClient.GetTokenAsync(new ClientCredentialsTokenRequest

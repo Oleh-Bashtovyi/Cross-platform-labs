@@ -21,7 +21,9 @@ public class DiverCertificationsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<DiverCertification>>> GetDiverCertifications()
     {
-        return await _context.DiverCertifications.ToListAsync();
+        var diverCertifications = await _context.DiverCertifications.ToListAsync();
+
+        return diverCertifications;
     }
 
     [HttpGet("{diverId}/{certificationCode}")]
@@ -34,13 +36,5 @@ public class DiverCertificationsController : ControllerBase
             return NotFound();
         }
         return cert;
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<DiverCertification>> CreateDiverCertification(DiverCertification cert)
-    {
-        _context.DiverCertifications.Add(cert);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetDiverCertification), new { diverId = cert.DiverId, certificationCode = cert.CertificationCode }, cert);
     }
 }

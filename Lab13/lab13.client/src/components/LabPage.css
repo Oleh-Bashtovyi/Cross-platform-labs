@@ -1,0 +1,6 @@
+.height-limited-textarea {
+    min-height: 120px;
+    max-height: 200px;
+    overflow-y: auto;
+    resize: vertical;
+}

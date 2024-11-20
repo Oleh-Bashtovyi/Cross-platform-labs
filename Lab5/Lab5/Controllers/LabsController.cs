@@ -1,8 +1,8 @@
-﻿using Lab5.ViewModels;
+﻿using Lab6.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 
-namespace Lab5.Controllers;
+namespace Lab6.Controllers;
 
 public class LabsController : Controller
 {
@@ -150,18 +150,12 @@ public class LabsController : Controller
             switch (labNumber)
             {
                 case 1:
-                    //var orders = Lab_1.IOHandler.ReadOrders(tempFilePath);
-                    //var res1 = Lab_1.OrdersProblemSolver.Solve(orders);
                     var res1 = LabLibrary.Lab1.Run(tempFilePath);
                     return Json(new { output = res1 });
                 case 2:
-                    //var blocks = Lab_2.IOHandler.ReadProductBlocks(tempFilePath);
-                    //var res2 = Lab_2.BlocksCombiningProblemSolver.Solve(blocks.ToArray());
                     var res2 = LabLibrary.Lab2.Run(tempFilePath);
                     return Json(new { output = res2 });
                 case 3:
-                    //var matrix = Lab_3.IOHandler.ReadMatrixFromFile(tempFilePath);
-                    //var res3 = Lab_3.Solution.Solve(matrix);
                     var res3 = LabLibrary.Lab3.Run(tempFilePath);
                     return Json(new { output = res3 });
                 default:

@@ -21,7 +21,9 @@ namespace Lab6.Controllers.v1
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Wreck>>> GetWrecks()
         {
-            return await _context.Wrecks.ToListAsync();
+            var wrecks = await _context.Wrecks.ToListAsync();
+
+            return wrecks;
         }
 
         [HttpGet("{id}")]
@@ -34,14 +36,6 @@ namespace Lab6.Controllers.v1
                 return NotFound();
             }
             return wreck;
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Wreck>> CreateWreck(Wreck wreck)
-        {
-            _context.Wrecks.Add(wreck);
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetWreck), new { id = wreck.DiveSiteId }, wreck);
         }
     }
 }

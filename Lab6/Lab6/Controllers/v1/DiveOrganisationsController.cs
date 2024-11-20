@@ -22,26 +22,20 @@ public class DiveOrganisationsController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<DiveOrganisation>>> GetDiveOrganisations()
     {
-        return await _context.DiveOrganisations.ToListAsync();
+        var diveOrg = await _context.DiveOrganisations.ToListAsync();
+
+        return diveOrg;
     }
 
     [HttpGet("{code}")]
     public async Task<ActionResult<DiveOrganisation>> GetDiveOrganisation(string code)
     {
-        var org = await _context.DiveOrganisations.FindAsync(code);
+        var org = await _context.DiveOrganisations.Where(o => o.OrganisationCode == code).FirstOrDefaultAsync();
 
         if (org == null)
         {
             return NotFound();
         }
         return org;
-    }
-
-    [HttpPost]
-    public async Task<ActionResult<DiveOrganisation>> CreateDiveOrganisation(DiveOrganisation org)
-    {
-        _context.DiveOrganisations.Add(org);
-        await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetDiveOrganisation), new { code = org.OrganisationCode }, org);
     }
 }
