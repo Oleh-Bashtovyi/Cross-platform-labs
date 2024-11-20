@@ -1,26 +1,29 @@
 <Project>
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <Solution Condition="'$(Solution)' == ''"></Solution>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<Solution Condition="'$(Solution)' == ''"></Solution>
+	</PropertyGroup>
 
-  <ItemGroup Condition="'$(Solution)' != ''">
-    <ProjectFile Include="$(Solution)\**\*.csproj" />
-  </ItemGroup>
+	<ItemGroup Condition="'$(Solution)' != ''">
+		<ProjectFile Include="$(Solution)\**\*.csproj" />
+	</ItemGroup>
 
-  <Target Name="Build">
-    <MSBuild Projects="@(ProjectFile)" Targets="Restore;Build" />
-  </Target>
+	<Target Name="Build">
+		<MSBuild Projects="@(ProjectFile)" Targets="Restore;Build" />
+	</Target>
 
-  <Target Name="Test">
-    <Exec Command="dotnet test --logger &quot;console;verbosity=detailed&quot;" WorkingDirectory="$(Solution)" />
-  </Target>
+	<Target Name="Test">
+		<PropertyGroup>
+			<MainProject>$(Solution)\$(Solution).Test\$(Solution).Test.csproj</MainProject>
+		</PropertyGroup>
+		<Exec Command="dotnet test --logger &quot;console;verbosity=detailed&quot; &quot;$(MainProject)&quot;" />
+	</Target>
 
-  <Target Name="Run">
-    <PropertyGroup>
-      <MainProject>$(Solution)\$(Solution).csproj</MainProject>
-    </PropertyGroup>
-    <Exec Command="dotnet run --project &quot;$(MainProject)&quot;" WorkingDirectory="$(Solution)" />
-  </Target>
+	<Target Name="Run">
+		<PropertyGroup>
+			<MainProject>$(Solution)\$(Solution).csproj</MainProject>
+		</PropertyGroup>
+		<Exec Command="dotnet run --project &quot;$(MainProject)&quot;" WorkingDirectory="$(Solution)" />
+	</Target>
 
 </Project>
