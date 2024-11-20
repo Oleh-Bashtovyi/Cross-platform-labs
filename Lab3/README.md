@@ -1,8 +1,30 @@
-﻿## Lab1
+﻿## Lab3
 ### Запуск програми
+
+Щоб запустити Lab3, треба спочатку встановити бібліотеку класів Lab3.Library. Виконайте наступні команди з кореневої папки Lab3:
 ```bash
-dotnet run --project App
+cd Lab3.Library
+
+dotnet build -c Release
+
+#Creating a NuGet package from the Lab3.Library project...
+dotnet pack Lab3.Library.csproj -c Release -o ./nupkg
+
+cd ..
+cd Lab3
+
+#Installing the NuGet package into the Lab3.Runner project...
+dotnet add package OBashtovyi_Lab3 --version 1.0.0 --source ../Lab3.Library/nupkg
+
+#Restoring all project dependencies...
+dotnet restore
+
+cd ..
+
+#Executing the Lab3.Runner project...
+dotnet run --project Lab3/Lab3.csproj
 ```
+
 ### Запуск тестів
 Без проміжних результатів
 ```bash
