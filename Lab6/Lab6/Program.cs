@@ -24,7 +24,8 @@ builder.Services.AddControllers(options =>
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "My API V1", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Lab6 API V1", Version = "v1" });
+    c.SwaggerDoc("v2", new OpenApiInfo { Title = "Lab6 API V2", Version = "v2" });
     c.ResolveConflictingActions(apiDescriptions => apiDescriptions.First());
 });
 
@@ -79,11 +80,12 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
 
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowSpecificOrigin",
-        policy => policy
-            .WithOrigins(builder.Configuration["WebApp:Url"] ?? throw new InvalidOperationException("Web app url is empty!"))
-            .AllowAnyMethod()
-            .AllowAnyHeader());
+    options.AddPolicy("AllowAnyOrigin", policy =>
+    {
+        policy.AllowAnyOrigin()
+              .AllowAnyMethod()
+              .AllowAnyHeader();
+    });
 });
 
 
@@ -93,8 +95,28 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
+    var databaseType = builder.Configuration["DatabaseType"]?.ToLower();
+
+    // Apply migrations
+    switch (databaseType)
+    {
+        case "postgres":
+        case "sqlite":
+        case "mssql":
+            context.Database.EnsureCreated();
+            context.Database.Migrate();
+            break;
+        case "inmemory":
+            context.Database.EnsureCreated();
+            break;
+        default:
+            throw new InvalidOperationException($"Specify correct database provider: mssql, postgres, sqlite or InMemory. " +
+                                                $"Current: {databaseType}");
+    }
+
     context.SeedData();
 }
+
 
 if (app.Environment.IsDevelopment())
 {
@@ -103,7 +125,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseCors("AllowSpecificOrigin");
+app.UseCors("AllowAnyOrigin");
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();

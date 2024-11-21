@@ -5,7 +5,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<Auth0UserService>();
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddHttpClient<ApiService>(client =>
+builder.Services.AddHttpClient<Lab6ApiService>(client =>
 {
     var apiAppUrl = builder.Configuration["ApiApp:BaseUrl"];
 

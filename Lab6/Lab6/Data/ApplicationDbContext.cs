@@ -81,7 +81,7 @@ namespace Lab6.Data
             {
                 new Diver
                 {
-                    DiverId = Guid.NewGuid(),
+                    DiverId = new Guid("f47ac10b-58cc-4372-a567-0e02b2c3d479"),
                     DiverName = "Jhon Doe",
                     DiverDetails = "Experienced diver"
                 },
@@ -154,7 +154,7 @@ namespace Lab6.Data
                 },
                 new DiveSite
                 {
-                    DiveSiteId = Guid.NewGuid(),
+                    DiveSiteId = new Guid("d27ca42c-58cc-4372-a567-0e02b2c3d479"),
                     DiveSiteCode = "REEF",
                     DiveSiteName = "Coral Garden",
                     DiveSiteDescription = "Colorful coral reef",
@@ -236,6 +236,23 @@ namespace Lab6.Data
                 }
             };
             Dives.AddRange(dives);
+
+            var wrecks = new List<Wreck>
+            {
+                new Wreck
+                {
+                    DiveSiteId = diveSites[2].DiveSiteId,
+                    WreckDate = DateTime.UtcNow.AddDays(-10),
+                    WreckDetails = "Historic shipwreck from World War II, located at a depth of 40 meters",
+                },
+                new Wreck
+                {
+                    DiveSiteId = diveSites[4].DiveSiteId,
+                    WreckDate = DateTime.UtcNow.AddDays(-100),
+                    WreckDetails = "Historic shipwreck, located at a depth of 20 meters",
+                }
+            };
+            Wrecks.AddRange(wrecks);
 
             SaveChanges();
         }

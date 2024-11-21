@@ -6,12 +6,12 @@ using System.Text.Json.Serialization;
 
 namespace Lab6.Services;
 
-public class ApiService
+public class Lab6ApiService
 {
     private readonly HttpClient _httpClient;
     private readonly JsonSerializerOptions _serializationOptions;
 
-    public ApiService(HttpClient httpClient)
+    public Lab6ApiService(HttpClient httpClient)
     {
         _httpClient = httpClient;
 
@@ -22,7 +22,7 @@ public class ApiService
         };
     }
 
-    public async Task<T?> GetData<T>(string token, string url)
+    public async Task<T?> FetchData<T>(string token, string url)
     {
         var requestUrl = $"api/{url}";
 

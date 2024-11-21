@@ -7,19 +7,14 @@
 
 **/.vagrant/
 **/nupkg/
+**/logs/
 **/Migrations/
 **/Lab6_VAR44_Database.db/
 **/Lab6_VAR44_Database.db-shm/
 **/Lab6_VAR44_Database.db-wal/
 /Lab5/Lab5/TempLabFiles/*.txt
 /Lab13/Lab13/TempLabFiles/*.txt
-lab_1_tasks.docx
-lab_2_tasks.docx
-lab_3_tasks.docx
-lab_4_tasks.docx
-lab_5_tasks.docx
-lab_6_tasks.docx
-
+*.docx
 
 # User-specific files
 *.suo

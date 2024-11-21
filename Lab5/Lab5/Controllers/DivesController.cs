@@ -10,9 +10,9 @@ namespace Lab6.Controllers;
 [Authorize]
 public class DivesController : Controller
 {
-    private readonly ApiService _apiService;
+    private readonly Lab6ApiService _apiService;
 
-    public DivesController(ApiService apiService)
+    public DivesController(Lab6ApiService apiService)
     {
         _apiService = apiService;
     }
@@ -26,7 +26,7 @@ public class DivesController : Controller
 
             var token = Request.Cookies["AccessToken"] ?? "";
 
-            var divers = await _apiService.GetData<List<DiveResponse>>(token, $"v1/dives/{queryString}");
+            var divers = await _apiService.FetchData<List<DiveResponse>>(token, $"v1/dives/{queryString}");
 
             ViewData["StartDate"] = diveRequest.StartDate?.ToString("yyyy-MM-dd");
             ViewData["EndDate"] = diveRequest.EndDate?.ToString("yyyy-MM-dd");
@@ -59,7 +59,7 @@ public class DivesController : Controller
         {
             var token = Request.Cookies["AccessToken"] ?? "";
 
-            var diver = await _apiService.GetData<DiveResponse>(token, $"v1/dives/{id}");
+            var diver = await _apiService.FetchData<DiveResponse>(token, $"v1/dives/{id}");
 
             if (diver == null)
             {

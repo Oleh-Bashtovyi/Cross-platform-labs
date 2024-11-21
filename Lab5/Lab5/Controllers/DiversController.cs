@@ -9,9 +9,9 @@ namespace Lab6.Controllers;
 [Controller]
 public class DiversController : Controller
 {
-    private readonly ApiService _apiService;
+    private readonly Lab6ApiService _apiService;
 
-    public DiversController(ApiService apiService)
+    public DiversController(Lab6ApiService apiService)
     {
         _apiService = apiService;
     }
@@ -23,7 +23,7 @@ public class DiversController : Controller
         {
             var token = Request.Cookies["AccessToken"] ?? "";
 
-            var divers = await _apiService.GetData<List<DiverResponse>>(token, "v1/divers");
+            var divers = await _apiService.FetchData<List<DiverResponse>>(token, "v1/divers");
 
             return View(divers);
         }
@@ -42,7 +42,7 @@ public class DiversController : Controller
         {
             var token = Request.Cookies["AccessToken"] ?? "";
 
-            var diver = await _apiService.GetData<DiverResponse>(token, $"v1/divers/{id}");
+            var diver = await _apiService.FetchData<DiverResponse>(token, $"v1/divers/{id}");
 
             if (diver == null)
             {

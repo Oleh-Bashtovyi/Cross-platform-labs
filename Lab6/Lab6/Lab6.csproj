@@ -36,4 +36,8 @@
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.9.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Lab6.DTO\Lab6.DTO.csproj" />
+  </ItemGroup>
+
 </Project>

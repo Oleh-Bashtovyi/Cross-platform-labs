@@ -9,21 +9,39 @@ namespace Lab6.Controllers;
 [Authorize]
 public class DiveSitesController : Controller
 {
-    private readonly ApiService _apiService;
+    private readonly Lab6ApiService _apiService;
 
-    public DiveSitesController(ApiService apiService)
+    public DiveSitesController(Lab6ApiService apiService)
     {
         _apiService = apiService;
     }
 
-    [Route("/dive-sites")]
-    public async Task<IActionResult> Index()
+    [Route("/dive-sites-v1")]
+    public async Task<IActionResult> IndexV1()
     {
         try
         {
             var token = Request.Cookies["AccessToken"] ?? "";
 
-            var diveSites = await _apiService.GetData<List<DiveSiteResponse>>(token, "v1/dive-sites");
+            var diveSites = await _apiService.FetchData<List<DiveSiteResponse>>(token, "v1/dive-sites");
+
+            return View(diveSites);
+        }
+        catch
+        {
+            return RedirectToAction("Login", "Account");
+        }
+    }
+
+
+    [Route("/dive-sites-v2")]
+    public async Task<IActionResult> IndexV2()
+    {
+        try
+        {
+            var token = Request.Cookies["AccessToken"] ?? "";
+
+            var diveSites = await _apiService.FetchData<List<DiveSiteResponseV2>>(token, "v2/dive-sites");
 
             return View(diveSites);
         }
@@ -41,7 +59,7 @@ public class DiveSitesController : Controller
         {
             var token = Request.Cookies["AccessToken"] ?? "";
 
-            var diveSite = await _apiService.GetData<DiveSiteResponse>(token, $"v1/dive-sites/{id}");
+            var diveSite = await _apiService.FetchData<DiveSiteResponse>(token, $"v1/dive-sites/{id}");
 
             if (diveSite == null)
             {
