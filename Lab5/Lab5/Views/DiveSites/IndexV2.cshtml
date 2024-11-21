@@ -1,0 +1,38 @@
+﻿@model IEnumerable<DiveSiteResponseV2>
+@{
+    ViewData["Title"] = "Dive Sites V2";
+}
+
+<h1>Dive Sites List - Api version: 2.0</h1>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Site Name</th>
+            <th>Description</th>
+            <th>Details</th>
+            <!--From version 2.0-->
+            <th>Site type details</th>
+            <th>Is wrecked</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var site in Model)
+        {
+            <tr>
+                <td>@site.DiveSiteId</td>
+                <td>@(site.DiveSiteName ?? "N/a")</td>
+                <td>@(site.DiveSiteDescription ?? "N/a")</td>
+                <td>@(site.OtherDetails ?? "N/a")</td>
+                <!--From version 2.0-->
+                <td>@(site.DiveSiteTypeDetails ?? "N/a")</td>
+                <td>@(site.WreckDate != null ? "Yes" : "No")</td>
+                <td>
+                    <a class="btn btn-primary" asp-action="Details" asp-controller="DiveSites" asp-route-id="@site.DiveSiteId">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

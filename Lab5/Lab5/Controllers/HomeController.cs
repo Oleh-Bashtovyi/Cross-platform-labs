@@ -8,9 +8,9 @@ namespace Lab6.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly ApiService _service;
+    private readonly Lab6ApiService _service;
 
-    public HomeController(ILogger<HomeController> logger, ApiService service)
+    public HomeController(ILogger<HomeController> logger, Lab6ApiService service)
     {
         _service = service;
         _logger = logger;

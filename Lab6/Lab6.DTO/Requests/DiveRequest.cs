@@ -1,7 +1,4 @@
-﻿using System.Net.Http;
-using static System.Runtime.InteropServices.JavaScript.JSType;
-using System.Web;
-using Microsoft.AspNetCore.WebUtilities;
+﻿using Microsoft.AspNetCore.WebUtilities;
 
 namespace Lab6.DTO;
 

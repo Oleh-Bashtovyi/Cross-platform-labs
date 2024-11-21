@@ -64,7 +64,28 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab5.Library", "Lab5\Lab5.L
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab4.Test", "Lab4\Lab4.Test\Lab4.Test.csproj", "{8DCF0FB1-C590-4F0E-A92F-018BA505D318}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab3.Library", "Lab3\Lab3.Library\Lab3.Library.csproj", "{1B2F91A1-CCC8-4D82-ACEC-B81BD7E1DB51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lab3.Library", "Lab3\Lab3.Library\Lab3.Library.csproj", "{1B2F91A1-CCC8-4D82-ACEC-B81BD7E1DB51}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lab7", "Lab7", "{4D1BE225-70AD-4BC5-859D-E19C04E1C07D}"
+	ProjectSection(SolutionItems) = preProject
+		Lab7\package-lock.json = Lab7\package-lock.json
+		Lab7\package.json = Lab7\package.json
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{2C1DBC45-ED5A-48FD-9A43-3FD396BFAF6D}"
+	ProjectSection(SolutionItems) = preProject
+		Lab7\Tests\DiversController.test.js = Lab7\Tests\DiversController.test.js
+		Lab7\tests\DivesController.test.js = Lab7\tests\DivesController.test.js
+		Lab7\tests\DiveSitesController.test.js = Lab7\tests\DiveSitesController.test.js
+		Lab7\Tests\test_helpers.js = Lab7\Tests\test_helpers.js
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Config", "Config", "{C29D8F8C-964A-4535-88F6-15A58CD1C658}"
+	ProjectSection(SolutionItems) = preProject
+		Lab7\config\logger.js = Lab7\config\logger.js
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lab6.DTO", "Lab6\Lab6.DTO\Lab6.DTO.csproj", "{7CEC75D3-9B24-41DB-9322-430EAA03DFE3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -134,6 +155,10 @@ Global
 		{1B2F91A1-CCC8-4D82-ACEC-B81BD7E1DB51}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1B2F91A1-CCC8-4D82-ACEC-B81BD7E1DB51}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1B2F91A1-CCC8-4D82-ACEC-B81BD7E1DB51}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7CEC75D3-9B24-41DB-9322-430EAA03DFE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CEC75D3-9B24-41DB-9322-430EAA03DFE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CEC75D3-9B24-41DB-9322-430EAA03DFE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CEC75D3-9B24-41DB-9322-430EAA03DFE3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -149,6 +174,8 @@ Global
 		{BC8AC0D4-C7BD-4F42-9F43-D9C726B4DED2} = {2D6E73FD-7A0B-4823-92EF-B062D07612C2}
 		{8DCF0FB1-C590-4F0E-A92F-018BA505D318} = {2D6E73FD-7A0B-4823-92EF-B062D07612C2}
 		{1B2F91A1-CCC8-4D82-ACEC-B81BD7E1DB51} = {0B0A1760-A14D-4441-B3DA-166FE1EB2905}
+		{2C1DBC45-ED5A-48FD-9A43-3FD396BFAF6D} = {4D1BE225-70AD-4BC5-859D-E19C04E1C07D}
+		{C29D8F8C-964A-4535-88F6-15A58CD1C658} = {4D1BE225-70AD-4BC5-859D-E19C04E1C07D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {548B586C-1626-4294-A409-947839BAF412}
