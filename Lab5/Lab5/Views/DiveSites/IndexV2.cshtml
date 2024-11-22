@@ -30,7 +30,7 @@
                 <td>@(site.DiveSiteTypeDetails ?? "N/a")</td>
                 <td>@(site.WreckDate != null ? "Yes" : "No")</td>
                 <td>
-                    <a class="btn btn-primary" asp-action="Details" asp-controller="DiveSites" asp-route-id="@site.DiveSiteId">Details</a>
+                    <a class="btn btn-primary" asp-action="DetailsV2" asp-controller="DiveSites" asp-route-id="@site.DiveSiteId">Details</a>
                 </td>
             </tr>
         }

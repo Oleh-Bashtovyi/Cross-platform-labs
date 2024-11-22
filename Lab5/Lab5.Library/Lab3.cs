@@ -10,7 +10,7 @@ public static class Lab3
     {
         var matrix = IOHandler.ReadMatrixFromFile(inputFile);
         var result = Solution.Solve(matrix);
-        return matrix.ToFormattedString();
+        return result.ToFormattedString();
     }
 }
 

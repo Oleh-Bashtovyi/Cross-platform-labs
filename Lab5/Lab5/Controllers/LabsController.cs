@@ -137,8 +137,7 @@ public class LabsController : Controller
             return BadRequest($"Can not process lab {labNumber}. Available labs: 1, 2, 3.");
         }
 
-        //create temp file
-        var tempFilePath = $"TempLabFiles/INPUT_LAB-{labNumber}_{Guid.NewGuid()}.TXT";
+        var tempFilePath = Path.GetTempFileName();
 
         try
         {

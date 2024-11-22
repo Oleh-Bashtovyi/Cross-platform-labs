@@ -38,33 +38,10 @@ Vagrant.configure("2") do |config|
       dotnet --list-runtimes
 
       if command -v dotnet &> /dev/null; then
-        echo "Trying to go to project folder..."
-        echo "========================================================================="
-        cd /home/vagrant/project
-        cd /home/vagrant/project
-        echo "Available directories after first cd:"
-        ls -d */ 
-        cd Lab5
-        
-        # Шукаємо процес dotnet, що працює
-        echo "Stopping the running dotnet process..."
-        echo "========================================================================="
+        cd /home/vagrant/project/Lab5
 
-        # Знаходимо процес, що використовує порт, на якому запущений проект
-        pid=$(lsof -t -i:7271)
+        dotnet dev-certs https --trust
 
-        # Якщо процес знайдений, то його зупиняємо
-        if [ -n "$pid" ]; then
-          echo "Found dotnet process with PID: $pid. Stopping it..."
-          kill -9 $pid
-        else
-          echo "No dotnet process found running on port 7271."
-        fi
-
-        dotnet dev-certs https
-
-        echo "Trying to launch project..."
-        echo "========================================================================="
         dotnet run --urls "https://0.0.0.0:7271"
         #dotnet run --urls "http://0.0.0.0:5252"
       else

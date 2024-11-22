@@ -2,6 +2,7 @@
 using Lab6.DTO;
 using Lab6.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,6 +23,8 @@ public class DivesController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<DiveResponse>>> GetDives([FromQuery] DiveRequest request)
     {
+        Console.WriteLine(HttpContext.Request.GetDisplayUrl());
+
         var query = _context.Dives
             .Include(d => d.Diver)
             .Include(d => d.DiveSite)
