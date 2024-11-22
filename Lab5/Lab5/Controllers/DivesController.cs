@@ -2,7 +2,6 @@
 using Lab6.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 
 namespace Lab6.Controllers;
 
@@ -26,7 +25,7 @@ public class DivesController : Controller
 
             var token = Request.Cookies["AccessToken"] ?? "";
 
-            var divers = await _apiService.FetchData<List<DiveResponse>>(token, $"v1/dives/{queryString}");
+            var divers = await _apiService.FetchData<List<DiveResponse>>(token, $"v1/dives?{queryString}");
 
             ViewData["StartDate"] = diveRequest.StartDate?.ToString("yyyy-MM-dd");
             ViewData["EndDate"] = diveRequest.EndDate?.ToString("yyyy-MM-dd");

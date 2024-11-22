@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.WebUtilities;
-
-namespace Lab6.DTO;
+﻿namespace Lab6.DTO;
 
 public class DiveRequest
 {
@@ -11,28 +9,26 @@ public class DiveRequest
     public string? SiteNameEnd { get; set; }
 
 
-
     public string ToQueryString()
     {
-        var parameters = new Dictionary<string, string?>();
+        var parameters = new List<string>();
 
         if (StartDate.HasValue)
-            parameters["dateFrom"] = StartDate?.ToString("yyyy-MM-ddTHH:mm:ss");
+            parameters.Add($"{nameof(StartDate)}={StartDate?.ToString("yyyy-MM-dd")}");
 
         if (EndDate.HasValue)
-            parameters["dateTo"] = EndDate?.ToString("yyyy-MM-ddTHH:mm:ss");
+            parameters.Add($"{nameof(EndDate)}={EndDate?.ToString("yyyy-MM-dd")}");
 
         if (DiverId.HasValue)
-            parameters["diverId"] = DiverId.ToString();
+            parameters.Add($"{nameof(DiverId)}={DiverId}");
 
         if (!string.IsNullOrEmpty(SiteNameStart))
-            parameters["startDate"] = SiteNameStart;
+            parameters.Add($"{nameof(SiteNameStart)}={Uri.EscapeDataString(SiteNameStart)}");
 
         if (!string.IsNullOrEmpty(SiteNameEnd))
-            parameters["endDate"] = SiteNameEnd;
+            parameters.Add($"{nameof(SiteNameEnd)}={Uri.EscapeDataString(SiteNameEnd)}");
 
-        string query = QueryHelpers.AddQueryString("", parameters);
-
-        return query;
+        return parameters.Count > 0 ? string.Join("&", parameters) : string.Empty;
     }
+
 }

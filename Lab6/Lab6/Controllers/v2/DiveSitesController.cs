@@ -20,7 +20,7 @@ public class DiveSitesController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<DiveSiteResponse>>> GetDiveSites()
+    public async Task<ActionResult<IEnumerable<DiveSiteResponseV2>>> GetDiveSites()
     {
         var diveSites = await _context.DiveSites
             .Include(ds => ds.Wreck)
@@ -39,5 +39,34 @@ public class DiveSitesController : ControllerBase
             .ToListAsync();
 
         return Ok(diveSites);
+    }
+
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<DiveSiteResponseV2>> GetDiveSite(Guid id)
+    {
+        var site = await _context.DiveSites
+            .Include(ds => ds.Wreck)
+            .Include(ds => ds.DiveSiteType)
+            .Where(ds => ds.DiveSiteId == id)
+            .Select(ds => new DiveSiteResponseV2()
+            {
+                DiveSiteId = ds.DiveSiteId,
+                DiveSiteCode = ds.DiveSiteCode,
+                DiveSiteDescription = ds.DiveSiteDescription,
+                DiveSiteName = ds.DiveSiteName,
+                OtherDetails = ds.OtherDetails,
+                //Addition fields from join
+                WreckDate = ds.Wreck.WreckDate,
+                DiveSiteTypeDetails = ds.DiveSiteType.DiveSiteDetails
+            })
+            .FirstOrDefaultAsync();
+
+        if (site == null)
+        {
+            return NotFound();
+        }
+
+        return site;
     }
 }

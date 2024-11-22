@@ -140,8 +140,7 @@ public class LabsController : ControllerBase
             return BadRequest(new { Error = "Invalid lab number. Available lab numbers: 1, 2, 3." });
         }
 
-        //create temp file
-        var tempFilePath = $"TempLabFiles/INPUT_LAB-{labNumber}_{Guid.NewGuid()}.TXT";
+        var tempFilePath = Path.GetTempFileName();
 
         try
         {

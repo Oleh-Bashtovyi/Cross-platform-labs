@@ -1,0 +1,18 @@
+﻿@model DiveSiteResponseV2
+@{
+    ViewData["Title"] = "Dive Site Details - V2";
+}
+
+<h1>Dive Site Details - Api version: 2.0</h1>
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Dive Site Name: @(Model.DiveSiteName ?? "N/a")</h5>
+        <p class="card-text">Description: @(Model.DiveSiteDescription ?? "N/a")</p>
+        <p class="card-text">Other Details: @(Model.OtherDetails ?? "N/a")</p>
+        <!--Version 2.0-->
+        <p class="card-text">Dive site type details: @(Model.DiveSiteTypeDetails ?? "N/a")</p>
+        <p class="card-text">Wreck date: @(Model.WreckDate.HasValue ? Model.WreckDate.Value : "N/a")</p>
+        <a asp-controller="DiveSites" asp-action="IndexV2" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>

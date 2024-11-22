@@ -52,14 +52,37 @@ public class DiveSitesController : Controller
     }
 
 
-    [Route("/dive-sites/{id:guid}")]
-    public async Task<IActionResult> Details(Guid id)
+    [Route("/dive-sites-v1/{id:guid}")]
+    public async Task<IActionResult> DetailsV1(Guid id)
     {
         try
         {
             var token = Request.Cookies["AccessToken"] ?? "";
 
             var diveSite = await _apiService.FetchData<DiveSiteResponse>(token, $"v1/dive-sites/{id}");
+
+            if (diveSite == null)
+            {
+                return NotFound();
+            }
+
+            return View(diveSite);
+        }
+        catch
+        {
+            return RedirectToAction("Login", "Account");
+        }
+    }
+
+
+    [Route("/dive-sites-v2/{id:guid}")]
+    public async Task<IActionResult> DetailsV2(Guid id)
+    {
+        try
+        {
+            var token = Request.Cookies["AccessToken"] ?? "";
+
+            var diveSite = await _apiService.FetchData<DiveSiteResponseV2>(token, $"v2/dive-sites/{id}");
 
             if (diveSite == null)
             {
