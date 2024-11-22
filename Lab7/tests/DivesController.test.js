@@ -1,6 +1,6 @@
 const http = require('http');
 const logger = require('../config/logger'); 
-const { getUserTokens } = require('./test_helpers'); 
+const { getUserTokens } = require('./utils'); 
 const request = require('supertest'); 
 
 const PORT = 7142;
