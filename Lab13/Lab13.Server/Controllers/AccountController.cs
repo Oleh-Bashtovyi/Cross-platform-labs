@@ -21,10 +21,16 @@ public class AccountController : ControllerBase
     [HttpPost("register")]
     public async Task<IActionResult> Register(UserRegisterViewModel model)
     {
-
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            var errors = ModelState
+                .Where(x => x.Value.Errors.Count > 0)
+                .ToDictionary(
+                    k => k.Key,
+                    v => v.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+            return BadRequest(new { Errors = errors });
         }
 
         try
@@ -34,7 +40,7 @@ public class AccountController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(new { Error = $"Error creating user: {ex.Message}" });
+            return BadRequest(new { errors = new { global = ex.Message } });
         }
     }
 
@@ -43,7 +49,14 @@ public class AccountController : ControllerBase
     {
         if (!ModelState.IsValid)
         {
-            return BadRequest(ModelState);
+            var errors = ModelState
+                .Where(x => x.Value.Errors.Count > 0)
+                .ToDictionary(
+                    k => k.Key,
+                    v => v.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                );
+
+            return BadRequest(new { Errors = errors });
         }
 
         try
@@ -69,7 +82,7 @@ public class AccountController : ControllerBase
         }
         catch (Exception ex)
         {
-            return BadRequest(new { Error = $"Error authenticating user: {ex.Message}" });
+            return Unauthorized();
         }
     }
 
