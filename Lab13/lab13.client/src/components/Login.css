@@ -1,0 +1,13 @@
+.is-invalid {
+    border-color: red;
+}
+
+.invalid-feedback {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 0.25rem;
+}
+
+    .invalid-feedback div {
+        margin-bottom: 0.5rem; /* Відступи між помилками */
+    }

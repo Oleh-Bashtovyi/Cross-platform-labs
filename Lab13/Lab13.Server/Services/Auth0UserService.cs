@@ -84,10 +84,6 @@ public class Auth0UserService
         };
     }
 
-
-
-
-
     public async Task<string> GetAccessTokenAsync()
     {
         var authClient = new AuthenticationApiClient(new Uri($"https://{_domain}"));
